@@ -9,31 +9,31 @@ import java.util.stream.Stream;
 @RequestMapping("/api/clients")
 class ClientsController {
     private ClientsService clientsService;
-    private ClientsMapper clientsMapper;
+    private ClientMapper clientMapper;
 
-    private ClientsController(ClientsService clientsService, ClientsMapper clientsMapper) {
+    private ClientsController(ClientsService clientsService, ClientMapper clientMapper) {
         this.clientsService = clientsService;
-        this.clientsMapper = clientsMapper;
+        this.clientMapper = clientMapper;
     }
 
     @PostMapping
-    private ClientsDTO addClient(@RequestBody CreateNewClientDTO newClientDTO) {
-        return clientsMapper.DTO(clientsService.addNewClient(clientsMapper.model(newClientDTO)));
+    private ClientDTO addClient(@RequestBody CreateNewClientDTO newClientDTO) {
+        return clientMapper.DTO(clientsService.addNewClient(clientMapper.model(newClientDTO)));
     }
 
     @GetMapping
-    private Stream<ClientsDTO> getAllClients() {
-        return clientsService.findAllClients().stream().map(clientsMapper::DTO);
+    private Stream<ClientDTO> getAllClients() {
+        return clientsService.findAllClients().stream().map(clientMapper::DTO);
     }
 
     @GetMapping("/{id}")
-    private Optional<ClientsDTO> getClienyById(@PathVariable long id) {
-        return clientsService.findById(id).map(clientsMapper::DTO);
+    private Optional<ClientDTO> getClienyById(@PathVariable long id) {
+        return clientsService.findById(id).map(clientMapper::DTO);
     }
 
     @GetMapping(params = "surname")
-    Stream<ClientsDTO> getClientBySurname(@RequestParam("surname") String surname) {
-        return clientsService.findBySurname(surname).stream().map(clientsMapper::DTO);
+    Stream<ClientDTO> getClientBySurname(@RequestParam("surname") String surname) {
+        return clientsService.findBySurname(surname).stream().map(clientMapper::DTO);
     }
 
     @DeleteMapping("/{id}")
@@ -43,6 +43,6 @@ class ClientsController {
 
     @PutMapping("/{id}")
     private void updateClientData(@PathVariable long id, @RequestBody UpdateClientDataDTO clientUpdateDTO) {
-        clientsService.updateAllClientData(id, clientsMapper.model(clientUpdateDTO));
+        clientsService.updateAllClientData(id, clientMapper.model(clientUpdateDTO));
     }
 }

@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-class AppointmentsDTO {
-    private long appointmentId;
+class AppointmentDTO {
+    private long id;
     private LocalDate chosenDay;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;

@@ -1,17 +1,15 @@
 package pl.sda.scheduler.clients;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @Entity
-public class Clients {
+public class Client {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue
     @Column(name = "ID_KLIENTA")
     private long id;
     @Column(name = "IMIE")

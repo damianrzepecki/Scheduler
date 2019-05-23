@@ -1,5 +1,6 @@
 package pl.sda.scheduler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import pl.sda.scheduler.appointments.Appointment;
 
 import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class AppointmentsTest {
+class AppointmentTest {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
     private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
     private String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":1}";
 
@@ -30,24 +33,36 @@ class AppointmentsTest {
                 .andExpect(status().isOk());
     }
 
-    private void addNewAppointment(String appointment) throws Exception {
-        mockMvc.perform(post("/api/appointments")
+    private Long addNewAppointment(String appointment) throws Exception {
+        String createdAppointmentString = mockMvc.perform(post("/api/appointments")
                 .content(appointment)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse().getContentAsString();
+        return objectMapper.readValue(createdAppointmentString, Appointment.class).getId();
+    }
+
+    private Long addAppointmentToClient(String client, String appointment) throws Exception {
+        addNewClient(client);
+        return addNewAppointment(appointment);
+
     }
 
     @DisplayName("Test if GET is giving status OK")
     @Test
     void test1() throws Exception {
-        mockMvc.perform(get("/api/appointments")).andExpect(status().isOk());
+        //WHEN
+        mockMvc.perform(get("/api/appointments"))
+                //THAN
+                .andExpect(status().isOk());
     }
 
-    @DisplayName("Add new Appointment to some day with user")
+    @DisplayName("Add new Appointment to chosen day with user")
     @Test
     void test2() throws Exception {
         //GIVEN
-        //String appointmentJSON
+        //String appointmentJSON and newClientInformationJson1
         //WHEN
         addNewClient(newClientInformationJson1);
         addNewAppointment(appointmentJSON);
@@ -60,27 +75,34 @@ class AppointmentsTest {
                 .andExpect(status().isOk());
     }
 
-    @DisplayName("Test if ID is not taken if userID is empty or wrong(no such id exists")
+    @DisplayName("Delete Appointment by Id")
     @Test
     void test3() throws Exception {
         //GIVEN
-        //No user will be posted
-        String appointmentJSONwithWrongID = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":2}";
-        String appointmentJSONwithNoID = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":}";
-        //WHEN
-        mockMvc.perform(post("/api/appointments")
-                .content(appointmentJSONwithWrongID)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-        mockMvc.perform(post("/api/appointments")
-                .content(appointmentJSONwithNoID)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-        //THAN
         addNewClient(newClientInformationJson1);
-        addNewAppointment(appointmentJSON);
+        long id = addNewAppointment(appointmentJSON);
+        //WHEN
+        mockMvc.perform(delete("/api/appointments/{id}", id)).andExpect(status()
+                .isOk());
+        //THAN
         mockMvc.perform(get("/api/appointments"))
-                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$", hasSize(0)))
                 .andExpect(status().isOk());
+    }
+
+    @DisplayName("Find Appointment By Date")
+    @Test
+    void test4() throws Exception {
+        //GIVEN
+        addAppointmentToClient(newClientInformationJson1, appointmentJSON);
+        addAppointmentToClient(newClientInformationJson1, appointmentJSON);
+        addAppointmentToClient(newClientInformationJson1, appointmentJSON);
+        //WHEN
+        mockMvc.perform(get("/api/appointments")
+                .param("date", "2019-05-23")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                //THAN
+                .andExpect(jsonPath("$[*].clientData", hasSize(3)));
     }
 }

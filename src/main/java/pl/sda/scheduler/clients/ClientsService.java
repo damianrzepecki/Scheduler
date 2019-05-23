@@ -13,19 +13,19 @@ class ClientsService {
         this.clientsRepository = clientsRepository;
     }
 
-    List<Clients> findAllClients() {
+    List<Client> findAllClients() {
         return clientsRepository.findAll();
     }
 
-    Clients addNewClient(Clients clients) {
-        return clientsRepository.save(clients);
+    Client addNewClient(Client client) {
+        return clientsRepository.save(client);
     }
 
-    Optional<Clients> findById(long id) {
+    Optional<Client> findById(long id) {
         return clientsRepository.findById(id);
     }
 
-    List<Clients> findBySurname(String surname) {
+    List<Client> findBySurname(String surname) {
         return clientsRepository.findBySurname(surname);
     }
 
@@ -33,7 +33,7 @@ class ClientsService {
         clientsRepository.deleteById(id);
     }
 
-    void updateAllClientData(long id, Clients client) {
+    void updateAllClientData(long id, Client client) {
         clientsRepository.findById(id).ifPresent(clients -> {
             clients.setName(client.getName());
             clients.setSurname(client.getSurname());
