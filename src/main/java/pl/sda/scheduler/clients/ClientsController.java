@@ -2,55 +2,47 @@ package pl.sda.scheduler.clients;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/clients")
 class ClientsController {
-    ClientsRepository clientsRepository;
+    private ClientsService clientsService;
+    private ClientsMapper clientsMapper;
 
-    ClientsController(ClientsRepository clientsRepository) {
-        this.clientsRepository = clientsRepository;
-    }
-
-    @GetMapping
-    Iterable<Clients> getAllClients() {
-        return clientsRepository.findAll();
+    private ClientsController(ClientsService clientsService, ClientsMapper clientsMapper) {
+        this.clientsService = clientsService;
+        this.clientsMapper = clientsMapper;
     }
 
     @PostMapping
-    Clients addClient(@RequestBody Clients clients) {
-        clients.setDateRegistered(LocalDate.now());
-        return clientsRepository.save(clients);
+    private ClientsDTO addClient(@RequestBody CreateNewClientDTO newClientDTO) {
+        return clientsMapper.DTO(clientsService.addNewClient(clientsMapper.model(newClientDTO)));
+    }
+
+    @GetMapping
+    private Stream<ClientsDTO> getAllClients() {
+        return clientsService.findAllClients().stream().map(clientsMapper::DTO);
     }
 
     @GetMapping("/{id}")
-    Optional<Clients> getClienyById(@PathVariable long id) {
-        return clientsRepository.findById(id);
+    private Optional<ClientsDTO> getClienyById(@PathVariable long id) {
+        return clientsService.findById(id).map(clientsMapper::DTO);
     }
 
     @GetMapping(params = "surname")
-    List<Clients> getClientBySurname(@RequestParam("surname") String surname) {
-        return clientsRepository.findBySurname(surname);
-
+    Stream<ClientsDTO> getClientBySurname(@RequestParam("surname") String surname) {
+        return clientsService.findBySurname(surname).stream().map(clientsMapper::DTO);
     }
 
     @DeleteMapping("/{id}")
-    void delateByID(@PathVariable long id) {
-        clientsRepository.deleteById(id);
+    private void delateByID(@PathVariable long id) {
+        clientsService.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    void updateClientData(@PathVariable long id, @RequestBody Clients newClients) {
-        clientsRepository.findById(id).ifPresent(clients -> {
-            clients.setName(newClients.getName());
-            clients.setSurname(newClients.getSurname());
-            clients.setEmail(newClients.getEmail());
-            clients.setPhoneNumber(newClients.getPhoneNumber());
-            clientsRepository.save(clients);
-        });
+    private void updateClientData(@PathVariable long id, @RequestBody UpdateClientDataDTO clientUpdateDTO) {
+        clientsService.updateAllClientData(id, clientsMapper.model(clientUpdateDTO));
     }
-
 }

@@ -5,15 +5,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AppointmentsService {
+class AppointmentsService {
     private AppointmentsRepository appointmentsRepository;
 
-    AppointmentsService(AppointmentsRepository appointmentsRepository) {
+    private AppointmentsService(AppointmentsRepository appointmentsRepository) {
         this.appointmentsRepository = appointmentsRepository;
     }
 
-    Appointments addNewAppointment(Appointments modelFromDTO) {
-        return appointmentsRepository.save(modelFromDTO);
+    Appointments addNewAppointment(Appointments appointments) {
+        return appointmentsRepository.save(appointments);
     }
 
     List<Appointments> getAllAppointments() {

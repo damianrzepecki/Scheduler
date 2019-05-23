@@ -16,8 +16,8 @@ class Appointments {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    long Id;
-    long clientId;
+    private long Id;
+    private long clientId;
     private LocalDate chosenDay;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;

@@ -39,6 +39,7 @@ class ClientsTest {
                 //THAN
                 .andExpect(status().isOk());
     }
+
     @DisplayName("After Sending GET to /api/clients list get sum of Clients = 3")
     @Test
     void test1_1() throws Exception {
@@ -49,13 +50,10 @@ class ClientsTest {
         //WHEN
         mockMvc.perform(get("/api/clients"))
                 //THAN
-                .andExpect(jsonPath("$",hasSize(3)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(status().isOk());
-
-
-
-
     }
+
     @DisplayName("After Sending POST to /api/clients add a new Client")
     @Test
     void test2() throws Exception {
@@ -81,17 +79,23 @@ class ClientsTest {
         addNewClient(newClientInformationJson3);
         //WHEN
         mockMvc.perform(get("/api/clients/3"))
+                //THAN
                 .andExpect(jsonPath("$.id", is(3)))
                 .andExpect(jsonPath("$.name", is("Stan")))
                 .andExpect(jsonPath("$.phoneNumber", is(345678901)))
                 .andExpect(jsonPath("$.email", is("jakis@email.bom")))
                 .andExpect(status().isOk());
-        //THAN
         mockMvc.perform(get("/api/clients"))
+                //THAN
                 .andExpect(jsonPath("$[*].name", containsInAnyOrder("John", "Mike", "Stan")))
                 .andExpect(status().isOk());
+        mockMvc.perform(get("/api/clients/2"))
+                //THAN
+                .andExpect(jsonPath("$.name", is("Mike")))
+                .andExpect(jsonPath("$.surname", is("Bar")))
+                .andExpect(status().isOk());
     }
-//    TODO Add message if no such client exists
+    //    TODO Add message if no such client exists
 
     @DisplayName("Send get to /api/clinets/{surname} to find client by surname(?)")
     @Test

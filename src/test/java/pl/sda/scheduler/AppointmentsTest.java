@@ -22,10 +22,18 @@ class AppointmentsTest {
     @Autowired
     private MockMvc mockMvc;
     private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
+    private String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":1}";
 
     private void addNewClient(String client) throws Exception {
         mockMvc.perform(post("/api/clients")
                 .content(client).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    private void addNewAppointment(String appointment) throws Exception {
+        mockMvc.perform(post("/api/appointments")
+                .content(appointment)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -39,19 +47,40 @@ class AppointmentsTest {
     @Test
     void test2() throws Exception {
         //GIVEN
-        String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":1}";
+        //String appointmentJSON
         //WHEN
         addNewClient(newClientInformationJson1);
-        mockMvc.perform(post("/api/appointments")
-                .content(appointmentJSON)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        addNewAppointment(appointmentJSON);
         //THAN
         mockMvc.perform(get("/api/appointments"))
-                .andExpect(jsonPath("$",hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].chosenDay", is("2019-05-23")))
                 .andExpect(jsonPath("$[0].chosenHour", is("10:00")))
                 .andExpect(jsonPath("$[0].clientId", is(1)))
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("Test if ID is not taken if userID is empty or wrong(no such id exists")
+    @Test
+    void test3() throws Exception {
+        //GIVEN
+        //No user will be posted
+        String appointmentJSONwithWrongID = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":2}";
+        String appointmentJSONwithNoID = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":}";
+        //WHEN
+        mockMvc.perform(post("/api/appointments")
+                .content(appointmentJSONwithWrongID)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+        mockMvc.perform(post("/api/appointments")
+                .content(appointmentJSONwithNoID)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
+        //THAN
+        addNewClient(newClientInformationJson1);
+        addNewAppointment(appointmentJSON);
+        mockMvc.perform(get("/api/appointments"))
+                .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(status().isOk());
     }
 }

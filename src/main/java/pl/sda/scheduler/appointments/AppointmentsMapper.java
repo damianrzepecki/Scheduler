@@ -6,7 +6,7 @@ import pl.sda.scheduler.clients.Clients;
 
 @Component
 class AppointmentsMapper {
-    Appointments modelFromDTO(CreateNewAppointmentDTO newAppointmentDTO) {
+    Appointments model(CreateNewAppointmentDTO newAppointmentDTO) {
         Appointments appointments = new Appointments();
         Clients client = new Clients();
         client.setId(newAppointmentDTO.getClientId());
@@ -16,7 +16,7 @@ class AppointmentsMapper {
         return appointments;
     }
 
-    AppointmentsDTO toDTO(Appointments appointments) {
+    AppointmentsDTO DTO(Appointments appointments) {
         AppointmentsDTO appointmentsDTO = new AppointmentsDTO();
         appointmentsDTO.setAppointmentId(appointments.getId());
         appointmentsDTO.setChosenDay(appointments.getChosenDay());

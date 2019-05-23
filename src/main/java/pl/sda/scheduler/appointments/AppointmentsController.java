@@ -10,18 +10,18 @@ class AppointmentsController {
     private AppointmentsMapper appointmentsMapper;
     private AppointmentsService appointmentsService;
 
-    AppointmentsController(AppointmentsMapper appointmentsMapper, AppointmentsService appointmentsService) {
+    private AppointmentsController(AppointmentsMapper appointmentsMapper, AppointmentsService appointmentsService) {
         this.appointmentsMapper = appointmentsMapper;
         this.appointmentsService = appointmentsService;
     }
 
     @PostMapping
-    AppointmentsDTO addNewAppointment(@RequestBody CreateNewAppointmentDTO newAppointmentDTO) {
-        return appointmentsMapper.toDTO(appointmentsService.addNewAppointment(appointmentsMapper.modelFromDTO(newAppointmentDTO)));
+    private AppointmentsDTO addNewAppointment(@RequestBody CreateNewAppointmentDTO newAppointmentDTO) {
+        return appointmentsMapper.DTO(appointmentsService.addNewAppointment(appointmentsMapper.model(newAppointmentDTO)));
     }
 
     @GetMapping
-    Stream<AppointmentsDTO> getAllAppointments() {
-        return appointmentsService.getAllAppointments().stream().map(appointmentsMapper::toDTO);
+    private Stream<AppointmentsDTO> getAllAppointments() {
+        return appointmentsService.getAllAppointments().stream().map(appointmentsMapper::DTO);
     }
 }
