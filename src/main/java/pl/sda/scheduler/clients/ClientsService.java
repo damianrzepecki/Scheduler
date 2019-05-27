@@ -1,5 +1,7 @@
 package pl.sda.scheduler.clients;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +14,9 @@ class ClientsService {
     private ClientsService(ClientsRepository clientsRepository) {
         this.clientsRepository = clientsRepository;
     }
-
+    Page<Client> getAllClients(Pageable pageable){
+        return clientsRepository.findAll(pageable);
+    }
     List<Client> findAllClients() {
         return clientsRepository.findAll();
     }

@@ -62,6 +62,6 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/
 
-#
+# my own choice for whole wrapper and 2 below
 *mvnw
 *mvnw.cmd
