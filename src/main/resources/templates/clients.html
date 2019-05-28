@@ -29,6 +29,7 @@
                     <th>Email</th>
                     <th>Data Rejestracji</th>
                     <th><a class="btn btn-primary eBtn1">Dodaj +</a></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,7 +40,10 @@
                     <td th:text="${client.phoneNumber}"></td>
                     <td th:text="${client.email}"></td>
                     <td th:text="${client.dateRegistered}"></td>
-                    <td><a th:href="@{/app/clients/findOne/(id=${client.id})}" class="btn btn-primary eBtn2">Edytuj</a>                  </td>
+                    <td>
+                        <a th:href="@{/app/clients/findOne/(id=${client.id})}" class="btn btn-primary eBtn2">Edytuj</a>
+                        <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger delBtn">Usuń</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -89,30 +93,36 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label for="id" class="col-form-label">ID</label>
-                                <input type="text" class="form-control" id="id" name="id" value="0" disabled/>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="id" class="col-form-label">ID</label>-->
+<!--                                <input type="text" class="form-control" id="id" name="id" value="0" disabled/>-->
+<!--                            </div>-->
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Imię:</label>
-                                <input type="text" class="form-control" id="name" name="name" value=""/>
+                                <input type="text" class="form-control" id="name" name="name" value="" required/>
                             </div>
                             <div class="form-group">
                                 <label for="surname" class="col-form-label">Nazwisko:</label>
-                                <input type="text" class="form-control" id="surname" name="surname" value=""/>
+                                <input type="text" class="form-control" id="surname" name="surname" value="" required/>
                             </div>
                             <div class="form-group">
                                 <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value=""/>
+                                <input type="tel" pattern="[0-9]{9}" class="form-control" id="phoneNumber"
+                                       name="phoneNumber" value="" required
+                                       oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
+                                       onchange="this.setCustomValidity('')" />
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-form-label">Email:</label>
-                                <input type="text" class="form-control" id="email" name="email" value=""/>
+                                <input type="email" class="form-control" id="email" name="email" value=""
+                                       required
+                                       oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
+                                       onchange="this.setCustomValidity('')"/>
                             </div>
-                            <div class="form-group">
-                                <label for="dateRegistered" class="col-form-label">Data Rejestracji:</label>
-                                <input type="text" class="form-control" id="dateRegistered" name="dateRegistered" value="" disabled/>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="dateRegistered" class="col-form-label">Data Rejestracji:</label>-->
+<!--                                <input type="text" class="form-control" id="dateRegistered" name="dateRegistered" value="" disabled/>-->
+<!--                            </div>-->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -125,8 +135,7 @@
     </div>
     <div class="myFormToUpdate">
         <form th:action="@{/app/clients/update/}" method="post">
-            <div class="modal fade" id="editClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+            <div class="modal fade" id="editClientModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -142,24 +151,29 @@
                             </div>
                             <div class="form-group">
                                 <label for="name" class="col-form-label">Imię:</label>
-                                <input type="text" class="form-control" id="name" name="name" value=""/>
+                                <input type="text" class="form-control" id="name" name="name" value="" required/>
                             </div>
                             <div class="form-group">
                                 <label for="surname" class="col-form-label">Nazwisko:</label>
-                                <input type="text" class="form-control" id="surname" name="surname" value=""/>
+                                <input type="text" class="form-control" id="surname" name="surname" value="" required/>
                             </div>
                             <div class="form-group">
                                 <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value=""/>
+                                <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{3}" class="form-control"
+                                       id="phoneNumber" name="phoneNumber" value="" required
+                                       oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
+                                       onchange="this.setCustomValidity('')"/>
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-form-label">Email:</label>
-                                <input type="text" class="form-control" id="email" name="email" value=""/>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       value="" required oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
+                                       onchange="this.setCustomValidity('')"/>
                             </div>
-                            <div class="form-group">
-                                <label for="dateRegistered" class="col-form-label">Data Rejestracji:</label>
-                                <input type="text" class="form-control" id="dateRegistered" name="dateRegistered" value="" disabled/>
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="dateRegistered" class="col-form-label">Data Rejestracji:</label>-->
+<!--                                <input type="text" class="form-control" id="dateRegistered" name="dateRegistered" value="" disabled/>-->
+<!--                            </div>-->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -170,8 +184,29 @@
             </div>
         </form>
     </div>
+    <div class="myFormToDelete">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+<!--                    <h5 class="modal-title" id="exampleModalLabel">UWAGA</h5>-->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p  class="alert alert-danger">
+                        Czy na pewno usunąć?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="" id="delRef" class="btn btn-danger">Usuń</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 </div>
-
-
 </body>
 </html>

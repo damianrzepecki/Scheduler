@@ -1,6 +1,5 @@
 package pl.sda.scheduler.clients;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -29,7 +28,7 @@ public class ClientsViewController {
         model.addAttribute("clients", page.getContent());
         return "clients";
     }
-    //TODO is save goot for both post and put? CreateNewClientDTO
+
     @PostMapping("/save")
     String saveClient(CreateNewClientDTO createNewClientDTO) {
         clientMapper.DTO(clientsService.addNewClient(clientMapper.model(createNewClientDTO)));
@@ -42,7 +41,7 @@ public class ClientsViewController {
         return "redirect:/app/clients";
     }
 
-    @DeleteMapping("/delete")
+    @GetMapping("/delete")
     String deleteClient(long id) {
         clientsService.deleteById(id);
         return "redirect:/app/clients";

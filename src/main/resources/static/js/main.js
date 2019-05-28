@@ -27,3 +27,13 @@ $(document).ready(function () {
         $('.myFormToUpdate #editClientModal').modal();
     });
 });
+
+$(document).ready(function () {
+$('.table .delBtn ').on('click',function (event) {
+    event.preventDefault();
+    var href = $(this).attr('href');
+    $('.myFormToDelete #delRef').attr('href',href);
+    $('.myFormToDelete #deleteModal').modal();
+
+    });
+});
