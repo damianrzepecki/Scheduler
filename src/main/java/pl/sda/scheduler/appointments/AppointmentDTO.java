@@ -12,6 +12,8 @@ class AppointmentDTO {
     private LocalDate chosenDay;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;
+    private String nameOfTreatment;
+    private String price;
     private long clientId;
     private String clientData;
 }

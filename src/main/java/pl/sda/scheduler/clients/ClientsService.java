@@ -14,9 +14,11 @@ class ClientsService {
     private ClientsService(ClientsRepository clientsRepository) {
         this.clientsRepository = clientsRepository;
     }
-    Page<Client> getAllClients(Pageable pageable){
+
+    Page<Client> getAllClients(Pageable pageable) {
         return clientsRepository.findAll(pageable);
     }
+
     List<Client> findAllClients() {
         return clientsRepository.findAll();
     }
@@ -41,6 +43,7 @@ class ClientsService {
         clientsRepository.findById(id).ifPresent(clients -> {
             clients.setName(client.getName());
             clients.setSurname(client.getSurname());
+            clients.setDateOfBirth(client.getDateOfBirth());
             clients.setEmail(client.getEmail());
             clients.setPhoneNumber(client.getPhoneNumber());
             clientsRepository.save(clients);

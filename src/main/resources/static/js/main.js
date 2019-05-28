@@ -5,6 +5,7 @@ $(document).ready(function () {
         $.get(href,function (client,status) {
             $('.myFormToAddNew #name').val(client.name);
             $('.myFormToAddNew #surname').val(client.surname);
+            $('.myFormToAddNew #dateOfBirth').val(client.dateOfBirth);
             $('.myFormToAddNew #phoneNumber').val(client.phoneNumber);
             $('.myFormToAddNew #email').val(client.email);
         });
@@ -20,6 +21,7 @@ $(document).ready(function () {
             $('.myFormToUpdate #id').val(client.id);
             $('.myFormToUpdate #name').val(client.name);
             $('.myFormToUpdate #surname').val(client.surname);
+            $('.myFormToUpdate #dateOfBirth').val(client.dateOfBirth);
             $('.myFormToUpdate #phoneNumber').val(client.phoneNumber);
             $('.myFormToUpdate #email').val(client.email);
             $('.myFormToUpdate #dateRegistered').val(client.dateRegistered);

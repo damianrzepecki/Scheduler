@@ -16,6 +16,8 @@ public class Client {
     private String name;
     @Column(name = "NAZWISKO")
     private String surname;
+    @Column(name = "DATA_URODZENIA")
+    private LocalDate dateOfBirth;
     @Column(name = "NUMER_TELEFONU")
     private int phoneNumber;
     @Column(name = "EMAIL")

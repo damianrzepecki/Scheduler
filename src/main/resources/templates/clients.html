@@ -26,9 +26,11 @@
                     <th>Imię</th>
                     <th>Nazwisko</th>
                     <th>Nr_Telefonu</th>
+                    <th>Data Urodzenia</th>
                     <th>Email</th>
                     <th>Data Rejestracji</th>
                     <th><a class="btn btn-primary eBtn1">Dodaj +</a></th>
+                    <th></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -37,12 +39,14 @@
                     <td th:text="${client.id}"></td>
                     <td th:text="${client.name}"></td>
                     <td th:text="${client.surname}"></td>
+                    <td th:tech="${client.dateOfBirth}"></td>
                     <td th:text="${client.phoneNumber}"></td>
                     <td th:text="${client.email}"></td>
                     <td th:text="${client.dateRegistered}"></td>
                     <td>
                         <a th:href="@{/app/clients/findOne/(id=${client.id})}" class="btn btn-primary eBtn2">Edytuj</a>
                         <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger delBtn">Usuń</a>
+                        <a class="btn btn-warning">Zabieg</a>
                     </td>
                 </tr>
                 </tbody>
@@ -106,6 +110,10 @@
                                 <input type="text" class="form-control" id="surname" name="surname" value="" required/>
                             </div>
                             <div class="form-group">
+                                <label for="dateOfBirth" class="col-form-label">DataUrodzenia:</label>
+                                <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" value="" required/>
+                            </div>
+                            <div class="form-group">
                                 <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
                                 <input type="tel" pattern="[0-9]{9}" class="form-control" id="phoneNumber"
                                        name="phoneNumber" value="" required
@@ -131,6 +139,7 @@
                     </div>
                 </div>
             </div>
+            `12`34567890
         </form>
     </div>
     <div class="myFormToUpdate">
@@ -156,6 +165,10 @@
                             <div class="form-group">
                                 <label for="surname" class="col-form-label">Nazwisko:</label>
                                 <input type="text" class="form-control" id="surname" name="surname" value="" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="col-form-label">DataUrodzenia:</label>
+                                <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" value="" required/>
                             </div>
                             <div class="form-group">
                                 <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>

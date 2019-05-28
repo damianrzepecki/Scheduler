@@ -18,6 +18,8 @@ public  class Appointment {
     private long Id;
     private long clientId;
     private LocalDate chosenDay;
+    private String nameOfTreatment;
+    private String price;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;
     @ManyToOne(fetch = FetchType.LAZY)

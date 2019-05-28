@@ -1,4 +1,4 @@
-package pl.sda.scheduler.Configurations;
+package pl.sda.scheduler.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;

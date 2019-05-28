@@ -172,4 +172,19 @@ class ClientTest {
         mockMvc.perform(get("/api/appointments"))
                 .andExpect(jsonPath("$", hasSize(0)));
     }
+
+    @DisplayName("Check if newly added LocalDate = Date of Birth works as intended")
+    @Test
+    void test8() throws Exception {
+        //GIVEN
+        String clientInfoJson = "{\"name\":\"John\",\"surname\":\"Doe\"," +
+                "\"dateOfBirth\":\"2018-01-01\",\"phoneNumber\":123456789," +
+                "\"email\":\"jakis@email.com\"}";
+        long id = addNewClient(clientInfoJson);
+        //WHEN
+        mockMvc.perform(get("/api/clients/{id}", id))
+                //THAN
+                .andExpect(jsonPath("$.dateOfBirth", is("2018-01-01")))
+                .andExpect(status().isOk());
+    }
 }

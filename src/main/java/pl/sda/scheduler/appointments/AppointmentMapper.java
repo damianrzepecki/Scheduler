@@ -10,6 +10,8 @@ class AppointmentMapper {
         Appointment appointment = new Appointment();
         Client client = new Client();
         client.setId(newAppointmentDTO.getClientId());
+        appointment.setNameOfTreatment(newAppointmentDTO.getNameOfTreatment());
+        appointment.setPrice(newAppointmentDTO.getPrice());
         appointment.setChosenDay(newAppointmentDTO.getChosenDay());
         appointment.setChosenHour(newAppointmentDTO.getChosenHour());
         appointment.setClient(client);
@@ -21,6 +23,8 @@ class AppointmentMapper {
         appointmentDTO.setId(appointment.getId());
         appointmentDTO.setChosenDay(appointment.getChosenDay());
         appointmentDTO.setChosenHour(appointment.getChosenHour());
+        appointmentDTO.setNameOfTreatment(appointment.getNameOfTreatment());
+        appointmentDTO.setPrice(appointment.getPrice());
         appointmentDTO.setClientData(appointment.getClient().getName() + " " + appointment.getClient().getSurname());
         appointmentDTO.setClientId(appointment.getClient().getId());
         return appointmentDTO;

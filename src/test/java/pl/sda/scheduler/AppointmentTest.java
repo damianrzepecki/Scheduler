@@ -25,7 +25,7 @@ class AppointmentTest {
     @Autowired
     private ObjectMapper objectMapper;
     private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
-    private String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":1}";
+    private String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"price\":\"125\",\"nameOfTreatment\":\"Mikrodermabrazja\",\"clientId\":1}";
 
     private void addNewClient(String client) throws Exception {
         mockMvc.perform(post("/api/clients")
@@ -43,10 +43,9 @@ class AppointmentTest {
         return objectMapper.readValue(createdAppointmentString, Appointment.class).getId();
     }
 
-    private Long addAppointmentToClient(String client, String appointment) throws Exception {
+    private void addAppointmentToClient(String client, String appointment) throws Exception {
         addNewClient(client);
-        return addNewAppointment(appointment);
-
+        addNewAppointment(appointment);
     }
 
     @DisplayName("Test if GET is giving status OK")
@@ -71,6 +70,8 @@ class AppointmentTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].chosenDay", is("2019-05-23")))
                 .andExpect(jsonPath("$[0].chosenHour", is("10:00")))
+                .andExpect(jsonPath("$[0].nameOfTreatment", is("Mikrodermabrazja")))
+                .andExpect(jsonPath("$[0].price", is("125")))
                 .andExpect(jsonPath("$[0].clientId", is(1)))
                 .andExpect(status().isOk());
     }
