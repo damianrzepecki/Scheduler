@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-class CreateNewAppointmentDTO {
+class  CreateNewAppointmentDTO {
 
-    private LocalDate chosenDay;
+    private String chosenDay;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;
     private String nameOfTreatment;

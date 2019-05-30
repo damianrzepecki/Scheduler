@@ -1,9 +1,11 @@
 package pl.sda.scheduler.clients;
 
 import lombok.Data;
+import pl.sda.scheduler.appointments.Appointment;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -24,4 +26,6 @@ public class Client {
     private String email;
     @Column(name = "DATA_REJESTRACJI")
     private LocalDate dateRegistered;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
+    private List<Appointment> appointment;
 }

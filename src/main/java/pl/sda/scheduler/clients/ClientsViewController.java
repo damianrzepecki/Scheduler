@@ -26,7 +26,7 @@ public class ClientsViewController {
         PageWrapper<ClientDTO> page = new PageWrapper<>(clientsPage, "/app/clients");
         model.addAttribute("page", page);
         model.addAttribute("clients", page.getContent());
-        return "clients";
+        return "client/clients";
     }
 
     @PostMapping("/save")
@@ -35,7 +35,6 @@ public class ClientsViewController {
         return "redirect:/app/clients";
     }
     @PostMapping("/update")
-
     String updateClientData(long id, UpdateClientDataDTO clientUpdateDTO) {
             clientsService.updateAllClientData(id, clientMapper.model(clientUpdateDTO));
         return "redirect:/app/clients";

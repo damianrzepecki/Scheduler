@@ -22,8 +22,7 @@ public  class Appointment {
     private String price;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
     private Client client;
 
 }

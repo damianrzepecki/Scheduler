@@ -3,6 +3,8 @@ package pl.sda.scheduler.appointments;
 import org.springframework.stereotype.Component;
 import pl.sda.scheduler.clients.Client;
 
+import java.time.LocalDate;
+
 
 @Component
 class AppointmentMapper {
@@ -12,7 +14,7 @@ class AppointmentMapper {
         client.setId(newAppointmentDTO.getClientId());
         appointment.setNameOfTreatment(newAppointmentDTO.getNameOfTreatment());
         appointment.setPrice(newAppointmentDTO.getPrice());
-        appointment.setChosenDay(newAppointmentDTO.getChosenDay());
+        appointment.setChosenDay(LocalDate.parse(newAppointmentDTO.getChosenDay()));
         appointment.setChosenHour(newAppointmentDTO.getChosenHour());
         appointment.setClient(client);
         return appointment;

@@ -10,7 +10,7 @@ class ClientMapper {
         Client client = new Client();
         client.setName(createNewClientDTO.getName());
         client.setSurname(createNewClientDTO.getSurname());
-        client.setDateOfBirth((createNewClientDTO.getDateOfBirth()));
+        client.setDateOfBirth((LocalDate.parse(createNewClientDTO.getDateOfBirth())));
         client.setEmail(createNewClientDTO.getEmail());
         client.setPhoneNumber(createNewClientDTO.getPhoneNumber());
         client.setDateRegistered(LocalDate.now());

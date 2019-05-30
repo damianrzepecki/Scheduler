@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+            th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>header</title>
+    <style>
+        .navbar-nav {
+            flex-direction: row;
+        }
+
+        .nav-link {
+            padding-right: .5rem !important;
+            padding-left: .5rem !important;
+        }
+
+        /* Fixes dropdown menus placed on the right side */
+        .ml-auto {
+            left: auto !important;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<th:block th:fragment="header">
+    <div class="container">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm justify-content-between">
+        <div class="navbar-nav">
+            <a class="navbar-brand" href="">PROGRAM</a>
+            <a class="nav-item nav-link active" th:href="@{/loggedIn/}">Home</a>
+            <a class="nav-item nav-link" th:href="@{/app/clients}">Clients</a>
+            <a class="nav-item nav-link" th:href="@{/app/appointments}">Appointments</a>
+        </div>
+        <div class="navbar-nav ">
+            <a class="nav-item nav-link" th:href="@{/logout}">Sign Out</a>
+        </div>
+    </nav>
+    </div>
+</th:block>
+</body>
+</html>
