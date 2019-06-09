@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    $('.table .eBtn1').on('click',function (event){
+    $('.table .eBtn1').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        $.get(href,function (client) {
+        $.get(href, function (client) {
             $('.myFormToAddNew #name').val(client.name);
             $('.myFormToAddNew #surname').val(client.surname);
             $('.myFormToAddNew #dateOfBirth').val(client.dateOfBirth);
@@ -13,10 +13,10 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
-    $('.table .eBtn2').on('click',function (event){
+    $('.table .eBtn2').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        $.get(href,function (client) {
+        $.get(href, function (client) {
             $('.myFormToUpdate #id').val(client.id);
             $('.myFormToUpdate #name').val(client.name);
             $('.myFormToUpdate #surname').val(client.surname);
@@ -28,18 +28,18 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
-$('.table .delBtn ').on('click',function (event) {
-    event.preventDefault();
-    var href = $(this).attr('href');
-    $('.myFormToDelete #delRef').attr('href',href);
-    $('.myFormToDelete #deleteModal').modal();
+    $('.table .delBtn ').on('click', function (event) {
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('.myFormToDelete #delRef').attr('href', href);
+        $('.myFormToDelete #deleteModal').modal();
     });
 });
 $(document).ready(function () {
-    $('.table .treatBtn').on('click',function (event){
+    $('.table .treatBtn').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        $.get(href,function (client) {
+        $.get(href, function (client) {
             $('.myFormToAddAppointment #id').val(client.id);
             $('.myFormToAddAppointment #clientId').val(client.id);
         });
@@ -47,10 +47,10 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
-    $('.table .eBtnEditAppo').on('click',function (event){
+    $('.table .eBtnEditAppo').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        $.get(href,function (appointment) {
+        $.get(href, function (appointment) {
             $('.myFormToUpdateAppo #id').val(appointment.id);
             $('.myFormToUpdateAppo #chosenDay').val(appointment.chosenDay);
             $('.myFormToUpdateAppo #chosenHour').val(appointment.chosenHour);
@@ -63,10 +63,10 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
-    $('.table .delBtn ').on('click',function (event) {
+    $('.table .delBtnAppo ').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        $('.myFormToDeleteAppo #delRef').attr('href',href);
+        $('.myFormToDeleteAppo #delRef1').attr('href', href);
         $('.myFormToDeleteAppo #deleteAppoModal').modal();
     });
 });

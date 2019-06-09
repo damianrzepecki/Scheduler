@@ -3,7 +3,6 @@ package pl.sda.scheduler.appointments;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.sda.scheduler.configurations.PageWrapper;
 
 import java.time.LocalDate;
 import java.util.List;

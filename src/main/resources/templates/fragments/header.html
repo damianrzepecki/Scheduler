@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="pl">
 <head>
     <title>header</title>
     <style>
@@ -11,29 +13,32 @@
             padding-right: .5rem !important;
             padding-left: .5rem !important;
         }
-
-        /* Fixes dropdown menus placed on the right side */
-        .ml-auto {
-            left: auto !important;
-            right: 0;
-        }
     </style>
 </head>
 <body>
 <th:block th:fragment="header">
-    <div class="container">
-    <nav class="navbar navbar-dark bg-dark navbar-expand-sm justify-content-between">
-        <div class="navbar-nav">
-            <a class="navbar-brand" href="">PROGRAM</a>
-            <a class="nav-item nav-link active" th:href="@{/loggedIn/}">Home</a>
-            <a class="nav-item nav-link" th:href="@{/app/clients}">Clients</a>
-            <a class="nav-item nav-link" th:href="@{/app/appointments}">Appointments</a>
-        </div>
-        <div class="navbar-nav ">
-            <a class="nav-item nav-link" th:href="@{/logout}">Sign Out</a>
-        </div>
-    </nav>
-    </div>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-sm justify-content-between">
+            <div sec:authorize="isAuthenticated()">
+                <div class="navbar-nav">
+                    <a class="navbar-brand" href="">PROGRAM</a>
+                    <a class="nav-item nav-link active" th:href="@{/app/loggedIn/}">Home</a>
+                    <a class="nav-item nav-link" th:href="@{/app/clients}">Clients</a>
+                    <a class="nav-item nav-link" th:href="@{/app/appointments}">Appointments</a>
+                    <a class="nav-item nav-link" th:href="@{/app/calendar}">Calendar</a>
+                </div>
+            </div>
+            <div class="navbar-nav ">
+                <div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+                    <span th:case="${false}"><a class="nav-item nav-link" id="login" th:href="@{/login}">Sign In</a></span>
+                    <span th:case="${true}"></span>
+                    <span th:case="*">Should never happen, but who knows...</span>
+                </div>
+
+                <div sec:authorize="isAuthenticated()">
+                    <a class="nav-item nav-link" th:href="@{/app/logout}">Sign Out</a>
+                </div>
+            </div>
+        </nav>
 </th:block>
 </body>
 </html>

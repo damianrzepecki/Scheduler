@@ -7,23 +7,27 @@
 <head>
     <script type="text/javascript" th:src="@{../js/main.js}"></script>
     <title>Appointments</title>
+
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <div class="container">
         <div class="card">
             <div class="card-header">
-                <table class="table">
+                <table data-toggle="table"
+                       data-pagination="true"
+                       data-search="true"
+                       id="dtOrderExample"
+                       data-locale="pl-PL"
+                       class="table table-borderless">
                     <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
-                        <th>Dzień</th>
+                        <th data-sortable="true">Dzień</th>
                         <th>Godzina</th>
-                        <th>Zabieg</th>
+                        <th data-sortable="true">Zabieg</th>
                         <th>Cena</th>
                         <th>ID Klienta</th>
-                        <th>Dane Klienta</th>
-                        <th></th>
+                        <th data-sortable="true">Dane Klienta</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -45,40 +49,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <div th:fragment='paginationbar'>
-                    <ul class='pagination pagination-centered'>
-                        <li th:class="${page.firstPage}?'disabled':''" style="display:inline">
-                            <span th:if='${page.firstPage}'>←pierwsza</span>
-                            <a th:if='${not page.firstPage}'
-                               th:href='@{${page.url}(page=0,size=${page.size})}'>←poprzednia</a>
-                        </li>
-                        <li th:class="${page.hasPreviousPage}? '' : 'disabled'" style="display:inline">
-                            <span th:if='${not page.hasPreviousPage}'>«</span>
-                            <a th:if='${page.hasPreviousPage}'
-                               th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'>«</a>
-                        </li>
-                        <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''"
-                            style="display:inline">
-                            <span th:if='${item.current}' th:text='${item.number}'>1</span>
-                            <a th:if='${not item.current}'
-                               th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'>
-                                <span th:text='${item.number}'>1</span>
-                            </a>
-                        </li>
-                        <li th:class="${page.hasNextPage}? '' : 'disabled'" style="display:inline">
-                            <span th:if='${not page.hasNextPage}'>»</span>
-                            <a th:if='${page.hasNextPage}'
-                               th:href='@{${page.url}(page=${page.number},size=${page.size})}'>»</a>
-                        </li>
-                        <li th:class="${page.lastPage}? 'disabled' : ''" style="display:inline">
-                            <span th:if='${page.lastPage}'>następna➝</span>
-                            <a th:if='${not page.lastPage}'
-                               th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>ostatnia➝</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
-
         </div>
         <div class="myFormToUpdateAppo">
             <form th:action="@{/app/appointments/update/}" method="post">
@@ -141,12 +112,11 @@
             </form>
         </div>
         <div class="myFormToDeleteAppo">
-            <div class="modal fade" id="deleteAppoModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+            <div class="modal fade" id="deleteAppoModal" tabindex="-1" role="dialog" aria-labelledby="deleteAppoModal"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <!--                    <h5 class="modal-title" id="exampleModalLabel">UWAGA</h5>-->
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -158,13 +128,13 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <a href="" id="delRef" class="btn btn-danger">Usuń</a>
+                            <a href="" id="delRef1" class="btn btn-danger">Usuń</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
 </body>
+
 </html>

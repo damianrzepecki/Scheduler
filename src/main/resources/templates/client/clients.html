@@ -10,268 +10,233 @@
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <table class="table">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Imię</th>
-                        <th>Nazwisko</th>
-                        <th>Data Urodzenia</th>
-                        <th>Nr_Telefonu</th>
-                        <th>Email</th>
-                        <th>Data Rejestracji</th>
-                        <th><a class="btn btn-primary eBtn1">Dodaj +</a></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="client: ${clients}">
-                        <td th:text="${client.id}"></td>
-                        <td th:text="${client.name}"></td>
-                        <td th:text="${client.surname}"></td>
-                        <td th:text="${client.dateOfBirth}"></td>
-                        <td th:text="${client.phoneNumber}"></td>
-                        <td th:text="${client.email}"></td>
-                        <td th:text="${client.dateRegistered}"></td>
-                        <td>
-                            <a th:href="@{/app/clients/findOne/(id=${client.id})}"
-                               class="btn btn-primary eBtn2">Edytuj</a>
-                            <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger delBtn">Usuń</a>
-                            <a th:href="@{/app/clients/findOne/(id=${client.id})}" class="btn btn-warning treatBtn">Zabieg</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div th:fragment='paginationbar'>
-                    <ul class='pagination pagination-centered'>
-                        <li th:class="${page.firstPage}?'disabled':''" style="display:inline">
-                            <span th:if='${page.firstPage}'>←pierwsza</span>
-                            <a th:if='${not page.firstPage}'
-                               th:href='@{${page.url}(page=0,size=${page.size})}'>←poprzednia</a>
-                        </li>
-                        <li th:class="${page.hasPreviousPage}? '' : 'disabled'" style="display:inline">
-                            <span th:if='${not page.hasPreviousPage}'>«</span>
-                            <a th:if='${page.hasPreviousPage}'
-                               th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'>«</a>
-                        </li>
-                        <li th:each='item : ${page.items}' th:class="${item.current}? 'active' : ''"
-                            style="display:inline">
-                            <span th:if='${item.current}' th:text='${item.number}'>1</span>
-                            <a th:if='${not item.current}'
-                               th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'>
-                                <span th:text='${item.number}'>1</span>
-                            </a>
-                        </li>
-                        <li th:class="${page.hasNextPage}? '' : 'disabled'" style="display:inline">
-                            <span th:if='${not page.hasNextPage}'>»</span>
-                            <a th:if='${page.hasNextPage}'
-                               th:href='@{${page.url}(page=${page.number},size=${page.size})}'>»</a>
-                        </li>
-                        <li th:class="${page.lastPage}? 'disabled' : ''" style="display:inline">
-                            <span th:if='${page.lastPage}'>następna➝</span>
-                            <a th:if='${not page.lastPage}'
-                               th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>ostatnia➝</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div class="card">
+        <div class="card-body">
+            <table data-toggle="table"
+                   data-pagination="true"
+                   data-search="true"
+                   id="dtOrderExample"
+                   data-locale="pl-PL"
+                   class="table table-borderless">
+                <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Imię</th>
+                    <th data-sortable="true">Nazwisko</th>
+                    <th data-sortable="true">Data Urodzenia</th>
+                    <th>Numer Telefonu</th>
+                    <th>Email</th>
+                    <th data-sortable="true">Data Rejestracji</th>
+                    <th><a class="btn btn-primary eBtn1">Dodaj</a></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="client: ${clients}">
+                    <td th:text="${client.id}"></td>
+                    <td th:text="${client.name}"></td>
+                    <td th:text="${client.surname}"></td>
+                    <td th:text="${client.dateOfBirth}"></td>
+                    <td th:text="${client.phoneNumber}"></td>
+                    <td th:text="${client.email}"></td>
+                    <td th:text="${client.dateRegistered}"></td>
+                    <td>
+                        <a th:href="@{/app/clients/findOne/(id=${client.id})}"
+                           class="btn btn-primary eBtn2">Edytuj</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger delBtn">Usuń</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/app/clients/findOne/(id=${client.id})}"
+                           class="btn btn-warning treatBtn">Zabieg</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="myFormToAddNew">
-            <form th:action="@{/app/clients/save}" method="post">
-                <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addModalLabel">Add new Client Data</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <!--                            <div class="form-group">-->
-                                <!--                                <label for="id" class="col-form-label">ID</label>-->
-                                <!--                                <input type="text" class="form-control" id="id" name="id" value="0" disabled/>-->
-                                <!--                            </div>-->
-                                <div class="form-group">
-                                    <label for="name" class="col-form-label">Imię:</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="surname" class="col-form-label">Nazwisko:</label>
-                                    <input type="text" class="form-control" id="surname" name="surname" value=""
-                                           required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="dateOfBirth" class="col-form-label">DataUrodzenia:</label>
-                                    <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value=""
-                                           required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
-                                    <input type="tel" pattern="[0-9]{9}" class="form-control" id="phoneNumber"
-                                           name="phoneNumber" value="" required
-                                           oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
-                                           onchange="this.setCustomValidity('')"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" class="col-form-label">Email:</label>
-                                    <input type="email" class="form-control" id="email" name="email" value=""
-                                           required
-                                           oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
-                                           onchange="this.setCustomValidity('')"/>
-                                </div>
-                                <!--                            <div class="form-group">-->
-                                <!--                                <label for="dateRegistered" class="col-form-label">Data Rejestracji:</label>-->
-                                <!--                                <input type="text" class="form-control" id="dateRegistered" name="dateRegistered" value="" disabled/>-->
-                                <!--                            </div>-->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary" value="save"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="myFormToUpdate">
-            <form th:action="@{/app/clients/update/}" method="post">
-                <div class="modal fade" id="editClientModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="UpdateModalLabel">Update Client Data</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="id" class="col-form-label">ID</label>
-                                    <input type="text" class="form-control" id="id" name="id" value="" readonly/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name" class="col-form-label">Imię:</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="surname" class="col-form-label">Nazwisko:</label>
-                                    <input type="text" class="form-control" id="surname" name="surname" value=""
-                                           required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="dateOfBirth" class="col-form-label">DataUrodzenia:</label>
-                                    <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value=""
-                                           required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
-                                    <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{3}" class="form-control"
-                                           id="phoneNumber" name="phoneNumber" value="" required
-                                           oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
-                                           onchange="this.setCustomValidity('')"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" class="col-form-label">Email:</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                           value="" required
-                                           oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
-                                           onchange="this.setCustomValidity('')"/>
-                                </div>
-                                <!--                            <div class="form-group">-->
-                                <!--                                <label for="dateRegistered" class="col-form-label">Data Rejestracji:</label>-->
-                                <!--                                <input type="text" class="form-control" id="dateRegistered" name="dateRegistered" value="" disabled/>-->
-                                <!--                            </div>-->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary" value="save"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="myFormToDelete">
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+    </div>
+    <div class="myFormToAddNew">
+        <form th:action="@{/app/clients/save}" method="post">
+            <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <!--                    <h5 class="modal-title" id="exampleModalLabel">UWAGA</h5>-->
+                            <h5 class="modal-title" id="addModalLabel">Add new Client Data</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p class="alert alert-danger">
-                                Czy na pewno usunąć?
-                            </p>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Imię:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="surname" class="col-form-label">Nazwisko:</label>
+                                <input type="text" class="form-control" id="surname" name="surname" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="col-form-label">DataUrodzenia:</label>
+                                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
+                                <input type="tel" pattern="[0-9]{9}" class="form-control" id="phoneNumber"
+                                       name="phoneNumber" value="" required
+                                       oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
+                                       onchange="this.setCustomValidity('')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" value=""
+                                       required
+                                       oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
+                                       onchange="this.setCustomValidity('')"/>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <a href="" id="delRef" class="btn btn-danger">Usuń</a>
+                            <input type="submit" class="btn btn-primary" value="save"/>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="myFormToAddAppointment">
-            <form th:action="@{/app/appointments/save}" method="post">
-                <div class="modal fade" id="addAppointmentModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="AppointmentModal">Dodaj Zabieg</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+        </form>
+    </div>
+    <div class="myFormToUpdate">
+        <form th:action="@{/app/clients/update/}" method="post">
+            <div class="modal fade" id="editClientModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="UpdateModalLabel">Update Client Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" value="" readonly/>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="id" class="col-form-label">ID</label>
-                                    <input type="text" class="form-control" id="id" name="id" value="" disabled/>
-                                </div>
-                                <div class="form-group" hidden>
-                                    <label for="clientId" class="col-form-label">ID</label>
-                                    <input type="text" class="form-control" id="clientId" name="clientId" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chosenDay" class="col-form-label">Dzień:</label>
-                                    <input type="date" class="form-control" id="chosenDay" name="chosenDay" value=""
-                                           required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="chosenHour" class="col-form-label">Godzina:</label>
-                                    <input type="time" class="form-control" id="chosenHour" name="chosenHour" value=""
-                                           required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="nameOfTreatment" class="col-form-label">Nazwa Zabiegu:</label>
-                                    <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
-                                           value="" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="price" class="col-form-label">Cena:</label>
-                                    <input type="text" class="form-control" id="price" name="price" value="" required/>
-                                </div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Imię:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="" required/>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary" value="save"/>
+                            <div class="form-group">
+                                <label for="surname" class="col-form-label">Nazwisko:</label>
+                                <input type="text" class="form-control" id="surname" name="surname" value=""
+                                       required/>
                             </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="col-form-label">DataUrodzenia:</label>
+                                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
+                                <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{3}" class="form-control"
+                                       id="phoneNumber" name="phoneNumber" value="" required
+                                       oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
+                                       onchange="this.setCustomValidity('')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       value="" required
+                                       oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
+                                       onchange="this.setCustomValidity('')"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="save"/>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
+        </form>
+    </div>
+    <div class="myFormToDelete">
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="alert alert-danger">
+                            Czy na pewno usunąć?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="" id="delRef" class="btn btn-danger">Usuń</a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="myFormToAddAppointment">
+        <form th:action="@{/app/appointments/save}" method="post">
+            <div class="modal fade" id="addAppointmentModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="AppointmentModal">Dodaj Zabieg</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" value="" disabled/>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label for="clientId" class="col-form-label">ID</label>
+                                <input type="text" class="form-control" id="clientId" name="clientId" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="chosenDay" class="col-form-label">Dzień:</label>
+                                <input type="date" class="form-control" id="chosenDay" name="chosenDay" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="chosenHour" class="col-form-label">Godzina:</label>
+                                <input type="time" class="form-control" id="chosenHour" name="chosenHour" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameOfTreatment" class="col-form-label">Nazwa Zabiegu:</label>
+                                <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
+                                       value="" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="col-form-label">Cena:</label>
+                                <input type="text" class="form-control" id="price" name="price" value="" required/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 </body>

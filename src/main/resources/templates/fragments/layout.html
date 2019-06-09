@@ -3,14 +3,26 @@
       xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head th:replace="fragments/head :: head(~{::title},~{::script})">
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Spring Scheduler Project SDA</title>
+    <style>
+        div.container {
+            padding: auto;
+            margin: auto;
+            text-align: center;
+            min-width: 1300px;
+        }
+    </style>
 </head>
 <body>
-<th:block th:replace="fragments/header :: header"/>
 <div class="container">
-    <th:block layout:fragment="content"/>
-</div>
-<div class="container fixed-bottom">
-    <th:block th:replace="fragments/footer :: footer"/>
+<div class="container-fluid" id="header">
+        <th:block th:replace="fragments/header :: header"/>
+    </div>
+<div class="container-fluid" id="content">
+        <th:block layout:fragment="content"/>
+    </div>
+<div class="container-fluid" id="footer">
+        <th:block th:replace="fragments/footer :: footer"/>
+    </div>
 </div>
 </body>
 </html>

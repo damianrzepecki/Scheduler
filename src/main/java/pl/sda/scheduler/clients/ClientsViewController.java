@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.sda.scheduler.configurations.PageWrapper;
 
 import java.util.Optional;
 
@@ -26,9 +25,8 @@ public class ClientsViewController {
     @GetMapping
     public String getClientList(Model model, Pageable pageable) {
         Page<ClientDTO> clientsPage = clientsService.getAllClients(pageable).map(clientMapper::DTO);
-        PageWrapper<ClientDTO> page = new PageWrapper<>(clientsPage, "/app/clients");
-        model.addAttribute("page", page);
-        model.addAttribute("clients", page.getContent());
+        model.addAttribute("page", clientsPage);
+        model.addAttribute("clients", clientsPage.getContent());
         return "client/clients";
     }
 

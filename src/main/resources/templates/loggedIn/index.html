@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       layout:decorate="~{fragments/layout}" lang="pl">
 <head>
     <title>Logged In</title>
     <script></script>
 </head>
 <body>
-
 <div layout:fragment="content" th:remove="tag">
     <h1>This is a secured page!</h1>
-    <p><a href="/" th:href="@{/}">Back to home page</a></p>
+    <div sec:authorize="isAuthenticated()">
+        <h2>This content is only shown to authenticated users.</h2>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        This content is only shown to administrators.
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')">
+        <h2>This content is only shown to users.</h2>
+    </div>
+
 </div>
 </body>
 </html>

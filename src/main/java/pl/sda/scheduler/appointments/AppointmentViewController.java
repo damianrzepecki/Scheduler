@@ -4,8 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import pl.sda.scheduler.configurations.PageWrapper;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
@@ -23,9 +25,8 @@ public class AppointmentViewController {
     @GetMapping
     public String getAppointmentList(Model model, Pageable pageable) {
         Page<AppointmentDTO> appointmentPage = appointmentsService.findAllAppointments(pageable).map(appointmentMapper::DTO);
-        PageWrapper<AppointmentDTO> page = new PageWrapper<>(appointmentPage, "/app/appointments");
-        model.addAttribute("page", page);
-        model.addAttribute("appointments", page.getContent());
+        model.addAttribute("page", appointmentPage);
+        model.addAttribute("appointments", appointmentPage.getContent());
         return "appointment/appointments";
     }
 

@@ -26,6 +26,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
@@ -86,17 +90,25 @@
             <version>2.3.0</version>
         </dependency>
         <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-calendar</artifactId>
-            <version>v3-rev378-1.25.0</version>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
-        <!-- Gmail Maven Dependency-->
         <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-gmail</artifactId>
-            <version>v1-rev103-1.25.0</version>
+            <groupId>net.sourceforge.pagesdialect</groupId>
+            <artifactId>pagesdialect-core</artifactId>
+            <version>2.1.6</version>
         </dependency>
-
+<!--        <dependency>-->
+<!--            <groupId>com.google.apis</groupId>-->
+<!--            <artifactId>google-api-services-calendar</artifactId>-->
+<!--            <version>v3-rev378-1.25.0</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; Gmail Maven Dependency&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.apis</groupId>-->
+<!--            <artifactId>google-api-services-gmail</artifactId>-->
+<!--            <version>v1-rev103-1.25.0</version>-->
+<!--        </dependency>-->
     </dependencies>
     <build>
         <plugins>
