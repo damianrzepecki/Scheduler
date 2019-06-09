@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.sda.scheduler.clients.Client;
 
@@ -19,16 +20,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @WithMockUser
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ActiveProfiles("test")
 class ClientTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-    private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
-    private String newClientInformationJson2 = "{\"name\":\"Mike\",\"surname\":\"Bar\",\"phoneNumber\":234567890,\"email\":\"jakis@email.pl\"}";
-    private String newClientInformationJson3 = "{\"name\":\"Stan\",\"surname\":\"Ley\",\"phoneNumber\":345678901,\"email\":\"jakis@email.bom\"}";
+    private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-02-02\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
+    private String newClientInformationJson2 = "{\"name\":\"Mike\",\"surname\":\"Bar\",\"dateOfBirth\":\"2000-03-02\",\"phoneNumber\":234567890,\"email\":\"jakis@email.pl\"}";
+    private String newClientInformationJson3 = "{\"name\":\"Stan\",\"surname\":\"Ley\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":345678901,\"email\":\"jakis@email.bom\"}";
 
     private Long addNewClient(String client) throws Exception {
         String createdClient = mockMvc.perform(post("/api/clients")
@@ -134,7 +136,7 @@ class ClientTest {
     void test6() throws Exception {
         //GIVEN
         long id = addNewClient(newClientInformationJson1);
-        String update = "{\"name\":\"Alexander\",\"surname\":\"TheBig\",\"phoneNumber\":1000,\"email\":\"alex@ande.rrr\"}";
+        String update = "{\"name\":\"Alexander\",\"surname\":\"TheBig\",\"dateOfBirth\":\"2222-04-02\",\"phoneNumber\":1000,\"email\":\"alex@ande.rrr\"}";
         //WHEN
         mockMvc.perform(put("/api/clients/{id}", id)
                 .content(update)

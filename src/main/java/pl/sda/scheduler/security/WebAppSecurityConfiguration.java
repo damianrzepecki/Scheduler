@@ -1,6 +1,8 @@
 package pl.sda.scheduler.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,16 +20,35 @@ public class WebAppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("{noop}1234").roles("USER");
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests().antMatchers("/login","/").permitAll()
-                .antMatchers("/app/**","/api/**")
-                .authenticated()
-                .and()
-                .formLogin().loginPage("/login").successForwardUrl("/app/loggedIn/")
-                .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/app/logout"))
-                .logoutSuccessUrl("/");
+    @Configuration
+    @Order(2)
+    public static class AppSecurity extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests().antMatchers("/login", "/").permitAll()
+                    .antMatchers("/app/**")
+                    .authenticated()
+                    .and()
+                    .formLogin().loginPage("/login").successForwardUrl("/app/loggedIn/")
+                    .and()
+                    .logout().logoutRequestMatcher(new AntPathRequestMatcher("/app/logout"))
+                    .logoutSuccessUrl("/");
+        }
+    }
+
+    @Configuration
+    @Order(1)
+    public static class ApiSecurity extends WebSecurityConfigurerAdapter {
+        @Override
+        public void configure(HttpSecurity http) throws Exception {
+            http
+                    .antMatcher("/api/**")
+                    .authorizeRequests()
+                    .antMatchers("/api/clients/", "/api/appointments")
+                    .authenticated()
+                    .and().httpBasic()
+                    .and().csrf().disable();
+        }
     }
 }
