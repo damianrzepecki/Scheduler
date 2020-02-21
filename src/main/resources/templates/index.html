@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}" lang="pl">
+      layout:decorate="~{fragments/layout}">
 <head>
     <title>Homepage</title>
     <script></script>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h1>Hello to the main project page</h1>
-    <p>Log in to see secured content</p>
+    <h1><span th:text="#{lang.index.page.h1}"></span></h1>
+    <p><span th:text="#{lang.index.page.p}"></span></p>
 </div>
 </body>
 </html>

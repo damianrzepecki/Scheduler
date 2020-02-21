@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="pl">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="fragments/head :: common_header(~{::title},~{::link},~{::script},~{::style})">
 
     <title>header</title>
@@ -10,15 +10,26 @@
 <body>
 <th:block th:fragment="footer">
     <footer class="page-footer py-4 bg-dark text-white">
-            <p>
+        <p>
                 <span sec:authorize="isAuthenticated()" style="display: inline-block;">
                     | Logged user: <span sec:authentication="name"></span> |
                     Roles: <span sec:authentication="principal.authorities"></span> |
                 </span>
-            </p>
-            <div class="footer-copyright">&copy; 2019 Copyright:
-                <a href=""> AlmostLikeVersum.not</a>
-            </div>
+        </p>
+        <div class="footer-copyright">&copy; 2019 Copyright:
+            <a href=""> AlmostLikeVersum.not</a>
+            <a href="?lang=en"><span th:text="#{lang.en}"></span></a>
+            <span style="float:right">
+                <span th:text="#{lang.change}"></span>
+                <select id="locales">
+                    <option value=""></option>
+                    <option value="en" th:text="#{lang.en}"></option>
+                    <option value="pl" th:text="#{lang.pl}"></option>
+                </select>
+            </span>
+        </div>
+
+
     </footer>
 </th:block>
 </body>
