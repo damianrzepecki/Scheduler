@@ -49,6 +49,7 @@ class AppointmentsService {
             appo.setChosenDay(appointment.getChosenDay());
             appo.setChosenHour(appointment.getChosenHour());
             appo.setNameOfTreatment(appointment.getNameOfTreatment());
+            appo.setHourFinished(appointment.getHourFinished());
             appo.setPrice(appointment.getPrice());
             appo.setClientId(appointment.getClientId());
             appointmentsRepository.save(appo);

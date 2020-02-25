@@ -55,6 +55,7 @@ $(document).ready(function () {
             $('.myFormToUpdateAppo #chosenDay').val(appointment.chosenDay);
             $('.myFormToUpdateAppo #chosenHour').val(appointment.chosenHour);
             $('.myFormToUpdateAppo #nameOfTreatment').val(appointment.nameOfTreatment);
+            $('.myFormToUpdateAppo #hourFinished').val(appointment.hourFinished);
             $('.myFormToUpdateAppo #price').val(appointment.price);
             $('.myFormToUpdateAppo #clientId').val(appointment.clientId);
             $('.myFormToUpdateAppo #clientData').val(appointment.clientData);

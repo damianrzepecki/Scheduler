@@ -10,9 +10,11 @@ import java.time.LocalTime;
 class AppointmentDTO {
     private long id;
     private LocalDate chosenDay;
+    private String nameOfTreatment;
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;
-    private String nameOfTreatment;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime hourFinished;
     private String price;
     private long clientId;
     private String clientData;

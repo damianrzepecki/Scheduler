@@ -34,8 +34,9 @@
                     <tr th:each="appo: ${appointments}">
                         <td th:text="${appo.id}"></td>
                         <td th:text="${appo.chosenDay}"></td>
-                        <td th:text="${appo.chosenHour}"></td>
                         <td th:text="${appo.nameOfTreatment}"></td>
+                        <td th:text="${appo.chosenHour}"></td>
+                        <td th:text="${appo.hourFinished}"></td>
                         <td th:text="${appo.price}"></td>
                         <td th:text="${appo.clientId}"></td>
                         <td th:text="${appo.clientData}"></td>
@@ -74,14 +75,19 @@
                                            required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="chosenHour" class="col-form-label">Godzina:</label>
+                                    <label for="nameOfTreatment" class="col-form-label">Nazwa Zabiegu:</label>
+                                    <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
+                                           value=""
+                                           required/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="chosenHour" class="col-form-label">Godzina Rozpoczęcia:</label>
                                     <input type="time" class="form-control" id="chosenHour" name="chosenHour" value=""
                                            required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nameOfTreatment" class="col-form-label">Nazwa Zabiegu:</label>
-                                    <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
-                                           value=""
+                                    <label for="chosenHour" class="col-form-label">Godzina Zakończenia:</label>
+                                    <input type="time" class="form-control" id="hourFinished" name="hourFinished" value=""
                                            required/>
                                 </div>
                                 <div class="form-group">

@@ -20,11 +20,14 @@ public class Appointment {
     private long clientId;
     @Column(name = "WYBRANY_DZIEN")
     private LocalDate chosenDay;
-    @Column(name = "WYBRANA_GODZINA")
-    @JsonFormat(pattern = "HH:mm")
-    private LocalTime chosenHour;
     @Column(name = "NAZWA_ZABIEGU")
     private String nameOfTreatment;
+    @Column(name = "GODZINA_ROZPOCZĘCIA")
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime chosenHour;
+    @JsonFormat(pattern = "HH:mm")
+    @Column(name = "GODZINA_ZAKOŃCZENIA")
+    private LocalTime hourFinished;
     @Column(name = "CENA")
     private String price;
     @ManyToOne
