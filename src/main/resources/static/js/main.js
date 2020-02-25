@@ -79,3 +79,10 @@ $(document).ready(function() {
         }
     });
 });
+
+$(document).ready(function addMinutes() {
+
+
+var minutesToAdd = getElementById('minutes').selectedOption;
+  document.getElementById('chosenHour').stepUp(minutesToAdd);
+});
