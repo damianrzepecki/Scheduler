@@ -87,7 +87,7 @@ $(document).ready(function() {
 $(document).ready(function(){
     $('#hourFinished').bindWithDelay('change', function (){
     if (($(this).val())<($('#chosenHour').val())){
-            setTimeout(function(){alert('Godzina Zakończenia nie może być mniejsza niż rozpoczęcia')}, 2000);
+            alert('Godzina Zakończenia nie może być mniejsza niż rozpoczęcia')
             }
     },2000);
 });
