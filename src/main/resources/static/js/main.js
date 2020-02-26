@@ -79,10 +79,21 @@ $(document).ready(function() {
         }
     });
 });
+$(document).ready(function() {
+    $('#chosenHour').on('change', function() {
+        $('#hourFinished').val($(this).val());
+    });
+});
+$(document).ready(function(){
+    $('#hourFinished').bindWithDelay('change', function (){
+    if (($(this).val())<($('#chosenHour').val())){
+            setTimeout(function(){alert('Godzina Zakończenia nie może być mniejsza niż rozpoczęcia')}, 2000);
+            }
+    },2000);
+});
 
 $(document).ready(function addMinutes() {
-
-
-var minutesToAdd = getElementById('minutes').selectedOption;
-  document.getElementById('chosenHour').stepUp(minutesToAdd);
+    document.getElementById('#hourFinished').stepUp(10);
 });
+
+
