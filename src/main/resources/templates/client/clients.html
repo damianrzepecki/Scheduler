@@ -221,11 +221,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="chosenHour" class="col-form-label">Godzina Rozpoczęcia:</label>
-                                <input type="time" class="form-control" id="chosenHour" name="chosenHour" value="00:00"
+                                <input type="time" class="form-control" id="chosenHour" name="chosenHour" value=""
                                        required/>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label">Ile Trwa Zabieg:</label>
+                                <label class="col-form-label">Zmień czas trwania o:  </label>
                                 <select id="minutes" name="minutes">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
@@ -238,12 +238,13 @@
                                     <option value="50">50</option>
                                     <option value="55">55</option>
                                     <option value="60">60</option>
-                                </select>
-                                    <input type="button" name="buttonAddMinutes" onclick="addMinutes()" value="potwierdź">
+                                </select> minut
+                                    <input type="button" id="buttonAddMinutes" value="Zwiększ">
+                                    <input type="button" id="buttonSubtractMinutes" value="Zmniejsz">
                             </div>
                             <div class="form-group">
                                 <label for="hourFinished" class="col-form-label">Godzina Zakończenia:</label>
-                                <input type="time" class="form-control" id="hourFinished" name="hourFinished" value="12:00"
+                                <input type="time" class="form-control" id="hourFinished" name="hourFinished" value=""
                                        required/>
                             </div>
                             <div class="form-group">
@@ -262,5 +263,4 @@
     </div>
 </div>
 </body>
-
 </html>

@@ -30,7 +30,7 @@ class AppointmentTest {
     @Autowired
     private ObjectMapper objectMapper;
     private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
-    private String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"price\":\"125\",\"nameOfTreatment\":\"Mikrodermabrazja\",\"clientId\":1}";
+    private String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"125\",\"nameOfTreatment\":\"Mikrodermabrazja\",\"clientId\":1}";
 
     private void addNewClient(String client) throws Exception {
         mockMvc.perform(post("/api/clients")
@@ -75,6 +75,7 @@ class AppointmentTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].chosenDay", is("2019-05-23")))
                 .andExpect(jsonPath("$[0].chosenHour", is("10:00")))
+                .andExpect(jsonPath("$[0].hourFinished", is("11:00")))
                 .andExpect(jsonPath("$[0].nameOfTreatment", is("Mikrodermabrazja")))
                 .andExpect(jsonPath("$[0].price", is("125")))
                 .andExpect(jsonPath("$[0].clientId", is(1)))

@@ -87,13 +87,22 @@ $(document).ready(function() {
 $(document).ready(function(){
     $('#hourFinished').bindWithDelay('change', function (){
     if (($(this).val())<($('#chosenHour').val())){
-            alert('Godzina Zakończenia nie może być mniejsza niż rozpoczęcia')
+            alert('Godzina Zakończenia nie może być mniejsza niż rozpoczęcia')//TODO i18n for jquery
+            $(function() {$('#hourFinished').val($('#chosenHour').val())});
             }
-    },2000);
+    },1500);
 });
 
-$(document).ready(function addMinutes() {
-    document.getElementById('#hourFinished').stepUp(10);
+$(document).ready(function () {
+    $('#buttonAddMinutes').on('click',function(){
+//     alert( $('#minutes').find(':selected').val()); //Alert pokazujący wybraną wartość
+     document.getElementById('hourFinished').stepUp($('#minutes').find(':selected').val());
+    });
+});
+$(document).ready(function () {
+    $('#buttonSubtractMinutes').on('click',function(){
+     document.getElementById('hourFinished').stepDown($('#minutes').find(':selected').val());
+    });
 });
 
 

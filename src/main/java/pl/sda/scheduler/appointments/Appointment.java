@@ -2,6 +2,7 @@ package pl.sda.scheduler.appointments;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.sda.scheduler.clients.Client;
 
 import javax.persistence.*;
@@ -23,10 +24,12 @@ public class Appointment {
     @Column(name = "NAZWA_ZABIEGU")
     private String nameOfTreatment;
     @Column(name = "GODZINA_ROZPOCZĘCIA")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;
-    @JsonFormat(pattern = "HH:mm")
     @Column(name = "GODZINA_ZAKOŃCZENIA")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime hourFinished;
     @Column(name = "CENA")
     private String price;

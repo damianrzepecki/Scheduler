@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(
-                "/webjars/**", //TODO co to webjars??
+                "/webjars/**",
                 "/img/**",
                 "/css/**",
                 "/static/**")
