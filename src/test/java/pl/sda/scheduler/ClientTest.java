@@ -95,6 +95,7 @@ class ClientTest {
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].name", is("John")))
                 .andExpect(jsonPath("$[0].surname", is("Doe")))
+                .andExpect(jsonPath("$[0].dateOfBirth", is("2000-02-02")))
                 .andExpect(jsonPath("$[0].phoneNumber", is(123456789)))
                 .andExpect(jsonPath("$[0].email", is("jakis@email.com")))
                 .andExpect(status().isOk());

@@ -11,27 +11,27 @@ import java.time.LocalTime;
 
 @Entity
 @Data
-@Table(name = "TERMIN")
+@Table(name = "APPOINTMENT")
 public class Appointment {
     @Id
     @GeneratedValue
-    @Column(name = "ID_TERMINU")
+    @Column(name = "ID_APPOINTMENT")
     private long Id;
-    @Column(name = "ID_KLIENTA")
+    @Column(name = "ID_CLIENT")
     private long clientId;
-    @Column(name = "WYBRANY_DZIEN")
+    @Column(name = "CHOSEN_DAY")
     private LocalDate chosenDay;
-    @Column(name = "NAZWA_ZABIEGU")
+    @Column(name = "TREATMENT_NAME")
     private String nameOfTreatment;
-    @Column(name = "GODZINA_ROZPOCZĘCIA")
+    @Column(name = "HOUR_START")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @JsonFormat(pattern = "HH:mm")
     private LocalTime chosenHour;
-    @Column(name = "GODZINA_ZAKOŃCZENIA")
+    @Column(name = "HOUR_END")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     @JsonFormat(pattern = "HH:mm")
     private LocalTime hourFinished;
-    @Column(name = "CENA")
+    @Column(name = "PRICE")
     private String price;
 
     private String clientData;
