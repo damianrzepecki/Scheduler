@@ -27,7 +27,7 @@ class ClientsController {
     }
 
     @GetMapping("/{id}")
-    private Optional<ClientDTO> getClienyById(@PathVariable long id) {
+    private Optional<ClientDTO> getClientById(@PathVariable long id) {
         return clientsService.findById(id).map(clientMapper::DTO);
     }
 
@@ -37,7 +37,7 @@ class ClientsController {
     }
 
     @DeleteMapping("/{id}")
-    private void delateByID(@PathVariable long id) {
+    private void deleteByID(@PathVariable long id) {
         clientsService.deleteById(id);
     }
 

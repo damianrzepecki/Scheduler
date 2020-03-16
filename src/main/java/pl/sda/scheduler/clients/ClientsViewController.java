@@ -4,11 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -31,8 +30,13 @@ public class ClientsViewController {
     }
 
     @PostMapping("/save")
-    String saveClient(CreateNewClientDTO createNewClientDTO) {
-        clientMapper.DTO(clientsService.addNewClient(clientMapper.model(createNewClientDTO)));
+    String saveClient(@Valid @ModelAttribute("client") BindingResult bindingResult, CreateNewClientDTO createNewClientDTO) {
+        Client clientExists = clientsService.findByEmail(createNewClientDTO.getEmail());
+        if (clientExists != null) {
+            bindingResult.reject("email");
+
+        } else
+            clientMapper.DTO(clientsService.addNewClient(clientMapper.model(createNewClientDTO)));
         return "redirect:/app/clients";
     }
 

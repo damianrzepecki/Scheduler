@@ -58,7 +58,10 @@
         </div>
     </div>
     <div class="myFormToAddNew">
-        <form th:action="@{/app/clients/save}" method="post">
+        <form th:action="@{/app/clients/save}" method="post" modelAttribute="client" th:object="${client}">
+<!--            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">-->
+<!--                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>-->
+<!--            </div>-->
             <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
@@ -98,6 +101,7 @@
                                        required
                                        oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
                                        onchange="this.setCustomValidity('')"/>
+                                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -150,10 +154,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-form-label">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                       value="" required
-                                       oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
-                                       onchange="this.setCustomValidity('')"/>
+
+                                <input type="email" class="form-control" id="email" name="email" readonly
+                                       value="" required>
                             </div>
                         </div>
                         <div class="modal-footer">

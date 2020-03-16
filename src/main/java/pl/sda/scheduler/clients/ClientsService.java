@@ -35,6 +35,10 @@ class ClientsService {
         return clientsRepository.findBySurname(surname);
     }
 
+    public Client findByEmail(String email) {
+        return clientsRepository.findByEmail(email);
+    }
+
     void deleteById(long id) {
         clientsRepository.deleteById(id);
     }
@@ -50,4 +54,5 @@ class ClientsService {
         });
     }
 }
+
 

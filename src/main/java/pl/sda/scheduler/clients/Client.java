@@ -4,6 +4,7 @@ import lombok.Data;
 import pl.sda.scheduler.appointments.Appointment;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "SPOTKANIE")
 public class Client {
+
     @Id
     @GeneratedValue
     @Column(name = "ID_KLIENTA")
@@ -24,6 +26,7 @@ public class Client {
     @Column(name = "NUMER_TELEFONU")
     private int phoneNumber;
     @Column(name = "EMAIL")
+    @Email
     private String email;
     @Column(name = "DATA_REJESTRACJI")
     private LocalDate dateRegistered;

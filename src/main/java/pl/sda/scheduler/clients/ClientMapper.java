@@ -22,7 +22,7 @@ class ClientMapper {
         clientDTO.setId(client.getId());
         clientDTO.setName(client.getName());
         clientDTO.setSurname(client.getSurname());
-        clientDTO.setDateOfBirth(client.getDateOfBirth());
+        clientDTO.setDateOfBirth(String.valueOf(client.getDateOfBirth()));
         clientDTO.setPhoneNumber(client.getPhoneNumber());
         clientDTO.setEmail(client.getEmail());
         clientDTO.setDateRegistered(client.getDateRegistered());
