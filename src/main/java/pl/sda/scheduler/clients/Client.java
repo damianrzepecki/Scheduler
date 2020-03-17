@@ -4,31 +4,29 @@ import lombok.Data;
 import pl.sda.scheduler.appointments.Appointment;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Entity
-@Table(name = "SPOTKANIE")
+@Table(name = "CLIENT_DATA")
 public class Client {
 
     @Id
     @GeneratedValue
-    @Column(name = "ID_KLIENTA")
+    @Column(name = "CLIENT_ID")
     private long id;
-    @Column(name = "IMIE")
+    @Column(name = "NAME")
     private String name;
-    @Column(name = "NAZWISKO")
+    @Column(name = "SURNAME")
     private String surname;
-    @Column(name = "DATA_URODZENIA")
+    @Column(name = "DATE_OF_BIRTH")
     private LocalDate dateOfBirth;
-    @Column(name = "NUMER_TELEFONU")
+    @Column(name = "PHONE_NUMBER")
     private int phoneNumber;
     @Column(name = "EMAIL")
-    @Email
     private String email;
-    @Column(name = "DATA_REJESTRACJI")
+    @Column(name = "DATE_REGISTERED")
     private LocalDate dateRegistered;
     @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
     private List<Appointment> appointment;

@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-interface AppointmentsRepository extends JpaRepository<Appointment, Long> {
+interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findByChosenDay(@Param("date") LocalDate date);
 
 }

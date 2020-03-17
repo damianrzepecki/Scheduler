@@ -1,5 +1,6 @@
 package pl.sda.scheduler.appointments;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -13,44 +14,43 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/app/appointments")
-public class AppointmentViewController {
-    private AppointmentsService appointmentsService;
-    private AppointmentMapper appointmentMapper;
+public class AppointmentController {
+    private AppointmentService appointmentService;
+    private AppointmentMapper appointmentMapper = Mappers.getMapper(AppointmentMapper.class);
 
-    public AppointmentViewController(AppointmentsService appointmentsService, AppointmentMapper appointmentMapper) {
-        this.appointmentsService = appointmentsService;
-        this.appointmentMapper = appointmentMapper;
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
     }
 
     @GetMapping
     public String getAppointmentList(Model model, Pageable pageable) {
-        Page<AppointmentDTO> appointmentPage = appointmentsService.findAllAppointments(pageable).map(appointmentMapper::DTO);
+        Page<AppointmentDTO> appointmentPage = appointmentService.findAllAppointments(pageable).map(appointmentMapper::appointmentToAppointmentDTO);
         model.addAttribute("page", appointmentPage);
         model.addAttribute("appointments", appointmentPage.getContent());
         return "appointment/appointments";
     }
 
     @PostMapping("/save")
-    public String saveAppointment(CreateNewAppointmentDTO newAppointmentDTO) {
-        appointmentMapper.DTO(appointmentsService.addNewAppointment(appointmentMapper.model(newAppointmentDTO)));
+    public String saveAppointment(AppointmentDTO appointmentDTO) {
+        appointmentService.addNewAppointment(appointmentMapper.appointmentDTOtoAppointment(appointmentDTO));
         return "redirect:/app/clients";
     }
 
     @GetMapping("/findOne")
     @ResponseBody
     Optional<AppointmentDTO> findOne(long id) {
-        return appointmentsService.findById(id).map(appointmentMapper::DTO);
+        return appointmentService.findById(id).map(appointmentMapper::appointmentToAppointmentDTO);
     }
 
     @GetMapping("/delete")
     String deleteAppointment(long id) {
-        appointmentsService.deleteAppointmentById(id);
+        appointmentService.deleteAppointmentById(id);
         return "redirect:/app/appointments";
     }
 
     @PostMapping("/update")
-    String updateAppointmentData(long id, UpdateAppointmentDTO updateAppointmentDTO) {
-        appointmentsService.updateAppointment(id, appointmentMapper.model(updateAppointmentDTO));
+    String updateAppointmentData(AppointmentDTO appointmentDTO) {
+        appointmentService.updateAppointment(appointmentMapper.appointmentDTOtoAppointment(appointmentDTO));
         return "redirect:/app/appointments";
     }
 }
