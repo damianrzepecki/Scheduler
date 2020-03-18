@@ -28,9 +28,9 @@ class ClientTest {
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-    private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-02-02\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
-    private String newClientInformationJson2 = "{\"name\":\"Mike\",\"surname\":\"Bar\",\"dateOfBirth\":\"2000-03-02\",\"phoneNumber\":234567890,\"email\":\"jakis@email.pl\"}";
-    private String newClientInformationJson3 = "{\"name\":\"Stan\",\"surname\":\"Ley\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":345678901,\"email\":\"jakis@email.bom\"}";
+    private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-02-02\",\"phoneNumber\":\"123456789\",\"email\":\"jakis@email.com\"}";
+    private String newClientInformationJson2 = "{\"name\":\"Mike\",\"surname\":\"Bar\",\"dateOfBirth\":\"2000-03-02\",\"phoneNumber\":\"234567890\",\"email\":\"jakis@email.pl\"}";
+    private String newClientInformationJson3 = "{\"name\":\"Stan\",\"surname\":\"Ley\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":\"345678901\",\"email\":\"jakis@email.bom\"}";
 
     private Long addNewClient(String client) throws Exception {
         String createdClient = mockMvc.perform(post("/api/clients")
@@ -136,7 +136,7 @@ class ClientTest {
     void test6() throws Exception {
         //GIVEN
         long id = addNewClient(newClientInformationJson1);
-        String update = "{\"name\":\"Alexander\",\"surname\":\"TheBig\",\"dateOfBirth\":\"2222-04-02\",\"phoneNumber\":1000,\"email\":\"alex@ande.rrr\"}";
+        String update = "{\"id\":\"1\",\"name\":\"Alexander\",\"surname\":\"TheBig\",\"dateOfBirth\":\"2222-04-02\",\"phoneNumber\":\"100000000\",\"email\":\"alex@ande.rrr\"}";
         //WHEN
         mockMvc.perform(put("/api/clients/{id}", id)
                 .content(update)
@@ -158,14 +158,14 @@ class ClientTest {
                 .getResponse().getContentAsString();
     }
 
-    @DisplayName("After deleting Client delate all apointments")
+    @DisplayName("After deleting Client delete all appointments")
     @Test
     void test7() throws Exception {
         //GIVEN
         long id = addNewClient(newClientInformationJson1);
-        String appointment1 = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"clientId\":1}";
-        String appointment2 = "{\"chosenDay\":\"2019-05-24\",\"chosenHour\":\"10:00\",\"clientId\":1}";
-        String appointment3 = "{\"chosenDay\":\"2019-05-25\",\"chosenHour\":\"10:00\",\"clientId\":1}";
+        String appointment1 = "{\"chosenDay\":\"2019-05-23\",\"nameOfTreatment\":\"Zabieg1\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
+        String appointment2 = "{\"chosenDay\":\"2019-05-24\",\"nameOfTreatment\":\"Zabieg2\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
+        String appointment3 = "{\"chosenDay\":\"2019-05-25\",\"nameOfTreatment\":\"Zabieg3\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
         addNewAppointment(appointment1);
         addNewAppointment(appointment2);
         addNewAppointment(appointment3);

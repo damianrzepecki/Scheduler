@@ -1,8 +1,10 @@
 package pl.sda.scheduler.appointments;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.sda.scheduler.clients.ClientDTO;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,8 +32,11 @@ public class AppointmentDTO {
     private String price;
     @NotNull
     private long clientId;
+    @JsonIgnore
     @NotNull
     private String clientData;
+    @NotNull
+    private ClientDTO client;
 
 
 }

@@ -43,6 +43,7 @@ class ClientControllerForApiAndTests {
 
     @PutMapping("/{id}")
     private void updateClientData(@RequestBody ClientDTO clientDTO) {
+
         clientService.updateAllClientData(clientMapper.clientDTOtoClient(clientDTO));
     }
 }

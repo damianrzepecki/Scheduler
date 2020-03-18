@@ -29,5 +29,5 @@ public class Client {
     @Column(name = "DATE_REGISTERED")
     private LocalDate dateRegistered;
     @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
-    private List<Appointment> appointment;
+    private List<Appointment> appointments;
 }

@@ -45,13 +45,13 @@ class ClientService {
 
     void updateAllClientData(Client newClient) {
         long id = newClient.getId();
-        clientRepository.findById(id).ifPresent(updatedClinet -> {
-            updatedClinet.setName(newClient.getName());
-            updatedClinet.setSurname(newClient.getSurname());
-            updatedClinet.setDateOfBirth(newClient.getDateOfBirth());
-            updatedClinet.setEmail(newClient.getEmail());
-            updatedClinet.setPhoneNumber(newClient.getPhoneNumber());
-            clientRepository.save(updatedClinet);
+        clientRepository.findById(id).ifPresent(updatedClient -> {
+            updatedClient.setName(newClient.getName());
+            updatedClient.setSurname(newClient.getSurname());
+            updatedClient.setDateOfBirth(newClient.getDateOfBirth());
+            updatedClient.setEmail(newClient.getEmail());
+            updatedClient.setPhoneNumber(newClient.getPhoneNumber());
+            clientRepository.save(updatedClient);
         });
     }
 }

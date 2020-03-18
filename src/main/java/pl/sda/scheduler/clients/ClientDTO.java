@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-class ClientDTO{
+public class ClientDTO{
     @Id
     @GeneratedValue
     private long id;
@@ -32,5 +32,5 @@ class ClientDTO{
     private LocalDate dateRegistered = LocalDate.now();
     @JsonIgnore
 
-    private List<AppointmentDTO> appointment;
+    private List<AppointmentDTO> appointments;
 }
