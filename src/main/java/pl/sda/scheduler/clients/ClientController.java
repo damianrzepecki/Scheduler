@@ -22,22 +22,27 @@ public class ClientController {
     }
 
     @GetMapping
-    public String getClientList(Model model, Pageable pageable) {
+    public String getClientList(Model model, Pageable pageable, ClientDTO clientDTO) {
         Page<ClientDTO> clientsPage = clientService.getAllClients(pageable).map(clientMapper::clientToClientDTO);
         model.addAttribute("page", clientsPage);
         model.addAttribute("clients", clientsPage.getContent());
+        model.addAttribute("clientDTO", clientDTO);
+
         return "client/clients";
     }
-
-    @PostMapping("/save")
-    String saveClient(@Valid @ModelAttribute("client") ClientDTO clientDTO, BindingResult bindingResult) {
+    @RequestMapping(value="/save", method = RequestMethod.POST)
+    String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult, Model model) {
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
-        if (clientExists != null) {
-            bindingResult.reject("email");
-
-        } else
+        if(clientExists != null){
+            bindingResult.rejectValue("email", "Email","Email TAKEN");
+        }
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+            return "client/clients";
+        }
+        else
             clientService.addNewClient(clientMapper.clientDTOtoClient(clientDTO));
-        return "redirect:/app/clients";
+            return "redirect:/app/clients";
     }
 
     @PostMapping("/update")

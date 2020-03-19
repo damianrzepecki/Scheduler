@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class ClientDTO {
     @GeneratedValue
     private long id;
     @NotNull
+    @Size(min = 2, max = 20)
     private String name;
     @NotNull
     private String surname;
@@ -24,7 +26,7 @@ public class ClientDTO {
     private String dateOfBirth;
     @NotNull
     private int phoneNumber;
-    @Email
+    @Email(message = "TAKEN")
     @NotNull
     private String email;
     @JsonIgnore
@@ -32,5 +34,6 @@ public class ClientDTO {
     private LocalDate dateRegistered = LocalDate.now();
     @JsonIgnore
     private List<AppointmentDTO> appointmentArrayList;
+
 
 }
