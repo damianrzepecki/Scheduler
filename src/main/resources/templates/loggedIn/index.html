@@ -19,11 +19,6 @@
     <div sec:authorize="hasRole('ROLE_USER')">
         <h2>This content is only shown to users.</h2>
     </div>
-    <div th:if="${appointment?.size() > 0}">more 0</div>
-    <div th:if="${appointment?.size() < 0}">les 0</div>
-    <div th:if="${appointment?.contains('11:00')}">23</div>
-    <div th:if="${appointment?.lenght() < 0}">4</div>
-    <div th:if="${appointment?.lenght() > 0}">5</div>
 </div>
 </body>
 </html>

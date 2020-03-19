@@ -30,19 +30,19 @@ public class ClientController {
 
         return "client/clients";
     }
-    @RequestMapping(value="/save", method = RequestMethod.POST)
-    String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult, Model model) {
+
+    @PostMapping("/save")
+    String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
-        if(clientExists != null){
-            bindingResult.rejectValue("email", "Email","Email TAKEN");
+        if (clientExists != null) {
+            bindingResult.rejectValue("email", "Email", "Email TAKEN");
         }
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "client/clients";
-        }
-        else
+        } else
             clientService.addNewClient(clientMapper.clientDTOtoClient(clientDTO));
-            return "redirect:/app/clients";
+        return "redirect:/app/clients";
     }
 
     @PostMapping("/update")

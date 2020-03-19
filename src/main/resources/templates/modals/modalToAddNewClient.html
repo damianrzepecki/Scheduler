@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <title>modalToAddNewClient</title>
+    <style>
+
+    </style>
+<body>
+<div th:fragment="confirm">
+    <div class="myFormToAddNew">
+        <form th:action="@{/app/clients/save}" method="post" modelAttribute="client" th:object="${clientDTO}" id="formToAddNew">
+            <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Add new Client Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Imię:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="" required/>
+                                <p th:if="${#fields.hasErrors('name')}" class="label label-danger"
+                                   th:errors="*{name}"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="surname" class="col-form-label">Nazwisko:</label>
+                                <input type="text" class="form-control" id="surname" name="surname" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="col-form-label">DataUrodzenia:</label>
+                                <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber" class="col-form-label">Numer Telefonu:</label>
+                                <input type="tel" pattern="[0-9]{9}" class="form-control" id="phoneNumber"
+                                       name="phoneNumber" value="" required
+                                       oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
+                                       onchange="this.setCustomValidity('')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       value=""
+                                       required
+                                       oninvalid="this.setCustomValidity('np. \'mail@domena.pl\'')"
+                                       onchange="this.setCustomValidity('')"/>
+                                <p th:if="${#fields.hasErrors('email')}" class="label label-danger"
+                                   th:errors="*{email}"></p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" id="buttonToSave" class="btn btn-primary" value="save">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

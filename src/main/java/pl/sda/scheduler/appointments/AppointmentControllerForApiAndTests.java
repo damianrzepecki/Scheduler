@@ -24,13 +24,15 @@ class AppointmentControllerForApiAndTests {
     private Stream<AppointmentDTO> getAllAppointments() {
         return appointmentService.getAllAppointments().stream().map(appointmentMapper::appointmentToAppointmentDTO);
     }
+
     @DeleteMapping
     @RequestMapping("/{id}")
-    private void deleteAppointmentById(@PathVariable long id){
+    private void deleteAppointmentById(@PathVariable long id) {
         appointmentService.deleteAppointmentById(id);
     }
+
     @GetMapping(params = "date")
-    Stream<AppointmentDTO> getAllAppointmentsByDate(@RequestParam("date") String date){
+    Stream<AppointmentDTO> getAllAppointmentsByDate(@RequestParam("date") String date) {
         return appointmentService.findAppointmentByDate(date).stream().map(appointmentMapper::appointmentToAppointmentDTO);
     }
 }

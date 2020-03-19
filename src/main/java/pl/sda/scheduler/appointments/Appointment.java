@@ -33,7 +33,6 @@ public class Appointment {
     private LocalTime hourFinished;
     @Column(name = "PRICE")
     private String price;
-
     private String clientData;
     @ManyToOne
     private Client client;
