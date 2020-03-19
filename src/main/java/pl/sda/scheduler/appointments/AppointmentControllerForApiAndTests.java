@@ -16,8 +16,8 @@ class AppointmentControllerForApiAndTests {
     }
 
     @PostMapping
-    private AppointmentDTO addNewAppointment(@RequestBody AppointmentDTO appointmentDTO) {
-        return appointmentMapper.appointmentToAppointmentDTO(appointmentService.addNewAppointment(appointmentMapper.appointmentDTOtoAppointment(appointmentDTO)));
+    private void addNewAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+        appointmentService.addNewAppointment(appointmentMapper.appointmentDTOtoAppointment(appointmentDTO));
     }
 
     @GetMapping
@@ -26,7 +26,7 @@ class AppointmentControllerForApiAndTests {
     }
     @DeleteMapping
     @RequestMapping("/{id}")
-    private void delateAppointmentById(@PathVariable long id){
+    private void deleteAppointmentById(@PathVariable long id){
         appointmentService.deleteAppointmentById(id);
     }
     @GetMapping(params = "date")

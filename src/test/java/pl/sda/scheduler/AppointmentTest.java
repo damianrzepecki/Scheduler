@@ -1,6 +1,5 @@
 package pl.sda.scheduler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.sda.scheduler.appointments.Appointment;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -27,30 +25,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AppointmentTest {
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-    private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
-    private String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"125\",\"nameOfTreatment\":\"Mikrodermabrazja\",\"clientId\":1}";
 
-    private void addNewClient(String client) throws Exception {
+    private void addNewClient() throws Exception {
+        String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":123456789,\"email\":\"jakis@email.com\"}";
         mockMvc.perform(post("/api/clients")
-                .content(client).contentType(MediaType.APPLICATION_JSON))
+                .content(newClientInformationJson1).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
-    private Long addNewAppointment(String appointment) throws Exception {
-        String createdAppointmentString = mockMvc.perform(post("/api/appointments")
-                .content(appointment)
+    private void addNewAppointment() throws Exception {
+        String appointmentJSON = "{\"chosenDay\":\"2019-05-23\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"125\",\"nameOfTreatment\":\"Mikrodermabrazja\",\"clientId\":1}";
+        mockMvc.perform(post("/api/appointments")
+                .content(appointmentJSON)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse().getContentAsString();
-        return objectMapper.readValue(createdAppointmentString, Appointment.class).getId();
+                .andExpect(status().isOk());
     }
 
-    private void addAppointmentToClient(String client, String appointment) throws Exception {
-        addNewClient(client);
-        addNewAppointment(appointment);
+    private void addAppointmentToClient() throws Exception {
+        addNewClient();
+        addNewAppointment();
     }
 
     @DisplayName("Test if GET is giving status OK")
@@ -58,20 +51,19 @@ class AppointmentTest {
     void test1() throws Exception {
         //WHEN
         mockMvc.perform(get("/api/appointments"))
-                //THAN
+        //THAN
                 .andExpect(status().isOk());
     }
 
-    @DisplayName("Add new Appointment to chosen day with user")
+    @DisplayName("Add new Appointment to chosen day to chosen user by ID," +
+            " and check if all the data is correct")
     @Test
     void test2() throws Exception {
         //GIVEN
-        //String appointmentJSON and newClientInformationJson1
+        addAppointmentToClient();
         //WHEN
-        addNewClient(newClientInformationJson1);
-        addNewAppointment(appointmentJSON);
-        //THAN
         mockMvc.perform(get("/api/appointments"))
+        //THAN
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].chosenDay", is("2019-05-23")))
                 .andExpect(jsonPath("$[0].chosenHour", is("10:00")))
@@ -79,6 +71,7 @@ class AppointmentTest {
                 .andExpect(jsonPath("$[0].nameOfTreatment", is("Mikrodermabrazja")))
                 .andExpect(jsonPath("$[0].price", is("125")))
                 .andExpect(jsonPath("$[0].clientId", is(1)))
+                .andExpect(jsonPath("$[0].clientData", is ("John Doe")))
                 .andExpect(status().isOk());
     }
 
@@ -86,10 +79,9 @@ class AppointmentTest {
     @Test
     void test3() throws Exception {
         //GIVEN
-        addNewClient(newClientInformationJson1);
-        long id = addNewAppointment(appointmentJSON);
+        addAppointmentToClient();
         //WHEN
-        mockMvc.perform(delete("/api/appointments/{id}", id)).andExpect(status()
+        mockMvc.perform(delete("/api/appointments/{id}", 2)).andExpect(status()
                 .isOk());
         //THAN
         mockMvc.perform(get("/api/appointments"))
@@ -101,15 +93,17 @@ class AppointmentTest {
     @Test
     void test4() throws Exception {
         //GIVEN
-        addAppointmentToClient(newClientInformationJson1, appointmentJSON);
-        addAppointmentToClient(newClientInformationJson1, appointmentJSON);
-        addAppointmentToClient(newClientInformationJson1, appointmentJSON);
+        addAppointmentToClient();
+        addAppointmentToClient();
+        addAppointmentToClient();
+
         //WHEN
         mockMvc.perform(get("/api/appointments")
                 .param("date", "2019-05-23")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                //THAN
-                .andExpect(jsonPath("$[*].clientData", hasSize(3)));
+        //THAN
+                .andExpect(jsonPath("$[*].client", hasSize(3)));
     }
+
 }

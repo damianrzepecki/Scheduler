@@ -18,8 +18,8 @@ class AppointmentService {
         this.appointmentRepository = appointmentRepository;
     }
 
-    Appointment addNewAppointment(Appointment appointment) {
-        return appointmentRepository.save(appointment);
+    void addNewAppointment(Appointment appointment) {
+        appointmentRepository.save(appointment);
     }
 
     Page<Appointment> findAllAppointments(Pageable pageable) {

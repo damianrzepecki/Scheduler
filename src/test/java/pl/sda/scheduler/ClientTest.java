@@ -11,7 +11,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import pl.sda.scheduler.clients.Client;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -26,19 +25,41 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ClientTest {
     @Autowired
     private MockMvc mockMvc;
+
+
     @Autowired
     private ObjectMapper objectMapper;
-    private String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-02-02\",\"phoneNumber\":\"123456789\",\"email\":\"jakis@email.com\"}";
-    private String newClientInformationJson2 = "{\"name\":\"Mike\",\"surname\":\"Bar\",\"dateOfBirth\":\"2000-03-02\",\"phoneNumber\":\"234567890\",\"email\":\"jakis@email.pl\"}";
-    private String newClientInformationJson3 = "{\"name\":\"Stan\",\"surname\":\"Ley\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":\"345678901\",\"email\":\"jakis@email.bom\"}";
 
-    private Long addNewClient(String client) throws Exception {
-        String createdClient = mockMvc.perform(post("/api/clients")
+    private void addNewClient(String client) throws Exception {
+        mockMvc.perform(post("/api/clients")
                 .content(client).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse().getContentAsString();
-        return objectMapper.readValue(createdClient, Client.class).getId();
+    }
+
+    private void addThreeClients() throws Exception {
+        String newClientInformationJson1 = "{\"name\":\"John\",\"surname\":\"Doe\",\"dateOfBirth\":\"2000-02-02\",\"phoneNumber\":\"123456789\",\"email\":\"jakis@email.com\"}";
+        addNewClient(newClientInformationJson1);
+        String newClientInformationJson2 = "{\"name\":\"Mike\",\"surname\":\"Bar\",\"dateOfBirth\":\"2000-03-02\",\"phoneNumber\":\"234567890\",\"email\":\"jakis@email.pl\"}";
+        addNewClient(newClientInformationJson2);
+        String newClientInformationJson3 = "{\"name\":\"Stan\",\"surname\":\"Ley\",\"dateOfBirth\":\"2000-04-02\",\"phoneNumber\":\"345678901\",\"email\":\"jakis@email.bom\"}";
+        addNewClient(newClientInformationJson3);
+    }
+    private void addNewAppointment(String appointment) throws Exception {
+        mockMvc.perform(post("/api/appointments")
+                .content(appointment)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
+    private void addAppointmentsToClientID_1() throws Exception {
+        String appointment1 = "{\"chosenDay\":\"2019-05-23\",\"nameOfTreatment\":\"Zabieg1\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
+        addNewAppointment(appointment1);
+        String appointment2 = "{\"chosenDay\":\"2019-05-24\",\"nameOfTreatment\":\"Zabieg2\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
+        addNewAppointment(appointment2);
+        String appointment3 = "{\"chosenDay\":\"2019-05-25\",\"nameOfTreatment\":\"Zabieg3\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
+        addNewAppointment(appointment3);
     }
 
     @DisplayName("After Sending GET to /api/clients list get OK status")
@@ -55,9 +76,7 @@ class ClientTest {
     @Test
     void test1_1() throws Exception {
         //GIVEN
-        addNewClient(newClientInformationJson1);
-        addNewClient(newClientInformationJson2);
-        addNewClient(newClientInformationJson3);
+        addThreeClients();
         //WHEN
         mockMvc.perform(get("/api/clients"))
                 //THAN
@@ -69,7 +88,7 @@ class ClientTest {
     @Test
     void test2() throws Exception {
         //GIVEN
-        addNewClient(newClientInformationJson1);
+        addThreeClients();
         //WHEN
         //THAN
         mockMvc.perform(get("/api/clients"))
@@ -85,11 +104,9 @@ class ClientTest {
     @Test
     void test3() throws Exception {
         //GIVEN
-        addNewClient(newClientInformationJson1);
-        long id2 = addNewClient(newClientInformationJson2);
-        long id3 = addNewClient(newClientInformationJson3);
+        addThreeClients();
         //WHEN
-        mockMvc.perform(get("/api/clients/{id}", id3))
+        mockMvc.perform(get("/api/clients/{id}", 3))
                 //THAN
                 .andExpect(jsonPath("$.id", is(3)))
                 .andExpect(jsonPath("$.name", is("Stan")))
@@ -107,9 +124,7 @@ class ClientTest {
     @Test
     void test4() throws Exception {
         //GIVEN
-        addNewClient(newClientInformationJson1);
-        addNewClient(newClientInformationJson2);
-        addNewClient(newClientInformationJson3);
+        addThreeClients();
         //WHEN
         //THAN
         mockMvc.perform(get("/api/clients/").param("surname", "Ley").contentType(MediaType.APPLICATION_JSON))
@@ -121,13 +136,13 @@ class ClientTest {
     @Test
     void test5() throws Exception {
         //GIVEN
-        long id = addNewClient(newClientInformationJson1);
+        addThreeClients();
         //WHEN
-        mockMvc.perform(delete("/api/clients/{id}", id))
+        mockMvc.perform(delete("/api/clients/{id}", 1))
                 .andExpect(status().isOk());
         //THAN
         mockMvc.perform(get("/api/clients"))
-                .andExpect(jsonPath("$", hasSize(0)))
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(status().isOk());
     }
 
@@ -135,42 +150,30 @@ class ClientTest {
     @Test
     void test6() throws Exception {
         //GIVEN
-        long id = addNewClient(newClientInformationJson1);
+        addThreeClients();
+
         String update = "{\"id\":\"1\",\"name\":\"Alexander\",\"surname\":\"TheBig\",\"dateOfBirth\":\"2222-04-02\",\"phoneNumber\":\"100000000\",\"email\":\"alex@ande.rrr\"}";
         //WHEN
-        mockMvc.perform(put("/api/clients/{id}", id)
+        mockMvc.perform(put("/api/clients/{id}", 1)
                 .content(update)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         //THAN
-        mockMvc.perform(get("/api/clients/{id}", id))
+        mockMvc.perform(get("/api/clients/{id}", 1))
                 .andExpect(jsonPath("$.name", is("Alexander")))
                 .andExpect(jsonPath("$.surname", is("TheBig")))
                 .andExpect(status().isOk());
     }
 
-    void addNewAppointment(String appointment) throws Exception {
-        mockMvc.perform(post("/api/appointments")
-                .content(appointment)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse().getContentAsString();
-    }
 
     @DisplayName("After deleting Client delete all appointments")
     @Test
     void test7() throws Exception {
         //GIVEN
-        long id = addNewClient(newClientInformationJson1);
-        String appointment1 = "{\"chosenDay\":\"2019-05-23\",\"nameOfTreatment\":\"Zabieg1\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
-        String appointment2 = "{\"chosenDay\":\"2019-05-24\",\"nameOfTreatment\":\"Zabieg2\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
-        String appointment3 = "{\"chosenDay\":\"2019-05-25\",\"nameOfTreatment\":\"Zabieg3\",\"chosenHour\":\"10:00\",\"hourFinished\":\"11:00\",\"price\":\"123\",\"clientId\":1}";
-        addNewAppointment(appointment1);
-        addNewAppointment(appointment2);
-        addNewAppointment(appointment3);
+        addThreeClients();
+        addAppointmentsToClientID_1();
         //WHEN
-        mockMvc.perform(delete("/api/clients/{id}", id))
+        mockMvc.perform(delete("/api/clients/{id}", 1))
                 .andExpect(status().isOk());
         //THAN
         mockMvc.perform(get("/api/appointments"))
@@ -184,7 +187,8 @@ class ClientTest {
         String clientInfoJson = "{\"name\":\"John\",\"surname\":\"Doe\"," +
                 "\"dateOfBirth\":\"2018-01-01\",\"phoneNumber\":123456789," +
                 "\"email\":\"jakis@email.com\"}";
-        long id = addNewClient(clientInfoJson);
+        addNewClient(clientInfoJson);
+        long id = 1;
         //WHEN
         mockMvc.perform(get("/api/clients/{id}", id))
                 //THAN

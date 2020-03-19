@@ -1,27 +1,30 @@
 package pl.sda.scheduler.appointments;
 
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import pl.sda.scheduler.clients.Client;
 import pl.sda.scheduler.clients.ClientMapper;
 
-@Mapper(uses = {ClientMapper.class})
-public interface AppointmentMapper {
+@Mapper(uses = ClientMapper.class)
+public abstract class AppointmentMapper {
+    @Mapping(target = "client", ignore = true)
+    public abstract AppointmentDTO appointmentToAppointmentDTO(Appointment appointment);
 
-    AppointmentDTO appointmentToAppointmentDTO(Appointment appointment);
-    Appointment appointmentDTOtoAppointment(AppointmentDTO appointmentDTO);
+    @Mapping(target = "client", ignore = true)
+    public abstract Appointment appointmentDTOtoAppointment(AppointmentDTO appointmentDTO);
 
-//
-//    @AfterMapping
-//    default void setClientData(Appointment appointment, @MappingTarget AppointmentDTO appointmentDTO) {
-//        long id = appointmentDTO.getClientId();
-//        String clientData = "";
-//        if (clientData.equals("")) {
-//            clientData = "error";
-//        }
-//        appointmentDTO.setClientData(clientData);
-//    }
-//
-//    @Named("clientNameAndSurname")
-//    static String userNameAndSurname(Appointment appointment) {
-//        return appointment.getClient().getName() + " " + appointment.getClient().getSurname();
-//    }
+    @AfterMapping
+    protected void mapAppointments(Appointment appointment, @MappingTarget AppointmentDTO appointmentDTO) {
+        appointmentDTO.setClientData(appointment.getClient().getName() + " " + appointment.getClient().getSurname());
+    }
+
+    @AfterMapping
+    protected void mapAppointments(AppointmentDTO appointmentDTO, @MappingTarget Appointment appointment) {
+        Client client = new Client();
+        client.setId(appointmentDTO.getClientId());
+        appointment.setClient(client);
+    }
+
 }

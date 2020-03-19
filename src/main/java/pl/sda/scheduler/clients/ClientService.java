@@ -23,8 +23,8 @@ class ClientService {
         return clientRepository.findAll();
     }
 
-    Client addNewClient(Client client) {
-        return clientRepository.save(client);
+    void addNewClient(Client client) {
+        clientRepository.save(client);
     }
 
     Optional<Client> findById(long id) {

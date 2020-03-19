@@ -17,8 +17,8 @@ class ClientControllerForApiAndTests {
     }
 
     @PostMapping
-    private ClientDTO addClient(@RequestBody ClientDTO clientDTO) {
-        return clientMapper.clientToClientDTO(clientService.addNewClient(clientMapper.clientDTOtoClient(clientDTO)));
+    private void addClient(@RequestBody ClientDTO clientDTO) {
+        clientService.addNewClient(clientMapper.clientDTOtoClient(clientDTO));
     }
 
     @GetMapping
