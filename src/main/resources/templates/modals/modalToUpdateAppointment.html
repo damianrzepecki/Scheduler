@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>modalToUpdateClientData</title>
+<style>
+
+</style>
+<body>
+<div th:fragment="confirm">
+    <div class="myFormToUpdateAppo">
+        <form th:action="@{/app/appointments/update/}" method="post">
+            <div class="modal fade" id="editAppoModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="UpdateModalLabel">Update Client Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">ID:</label>
+                                <input type="text" class="form-control" id="id" name="id" value="" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="chosenDay" class="col-form-label">Dzień:</label>
+                                <input type="date" class="form-control" id="chosenDay" name="chosenDay" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameOfTreatment" class="col-form-label">Nazwa Zabiegu:</label>
+                                <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
+                                       value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="chosenHour" class="col-form-label">Godzina Rozpoczęcia:</label>
+                                <input type="time" class="form-control" id="chosenHour" name="chosenHour" value=""
+                                       required/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="chosenHour" class="col-form-label">Godzina Zakończenia:</label>
+                                <input type="time" class="form-control" id="hourFinished" name="hourFinished" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="col-form-label">Nazwa Zabiegu:</label>
+                                <input type="text" class="form-control" id="price" name="price"
+                                       value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="clientId" class="col-form-label">ID Klienta:</label>
+                                <input type="text" class="form-control" id="clientId" name="clientId" value=""
+                                       required readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="clientData" class="col-form-label">Dane Klienta:</label>
+                                <input type="text" class="form-control" id="clientData" name="clientData" value=""
+                                       required readonly/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <title>header</title>
+    <title><span th:text="#{lang.head.fragment.title}"></span></title>
     <style>
         .navbar-nav {
             flex-direction: row;
@@ -19,22 +19,29 @@
         <nav class="navbar navbar-dark bg-dark navbar-expand-sm justify-content-between">
             <div sec:authorize="isAuthenticated()">
                 <div class="navbar-nav">
-                    <a class="navbar-brand" href="">PROGRAM</a>
-                    <a class="nav-item nav-link active" th:href="@{/app/loggedIn/}">Home</a>
-                    <a class="nav-item nav-link" th:href="@{/app/clients}">Clients</a>
-                    <a class="nav-item nav-link" th:href="@{/app/appointments}">Appointments</a>
-                    <a class="nav-item nav-link" th:href="@{/app/calendar}">Calendar</a>
+                    <a class="navbar-brand" th:href="@{/}">
+                        <span th:text="#{lang.header.fragment.brandName}"></span></a>
+                    <a class="nav-item nav-link active" th:href="@{/app/loggedIn/}">
+                        <span th:text="#{lang.header.fragment.loggedIn}"></span></a>
+                    <a class="nav-item nav-link" th:href="@{/app/clients}">
+                        <span th:text="#{lang.header.fragment.clients}"></span></a>
+                    <a class="nav-item nav-link" th:href="@{/app/appointments}">
+                        <span th:text="#{lang.header.fragment.appointments}"></span></a>
+                    <a class="nav-item nav-link" th:href="@{/app/calendar}">
+                        <span th:text="#{lang.header.fragment.calendar}"></span></a>
                 </div>
             </div>
             <div class="navbar-nav ">
                 <div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
-                    <span th:case="${false}"><a class="nav-item nav-link" id="login" th:href="@{/login}">Sign In</a></span>
+                    <span th:case="${false}"><a class="nav-item nav-link" id="login" th:href="@{/login}">
+                        <span th:text="#{lang.header.fragment.logIn}"></span></a></span>
                     <span th:case="${true}"></span>
                     <span th:case="*">Should never happen, but who knows...</span>
                 </div>
 
                 <div sec:authorize="isAuthenticated()">
-                    <a class="nav-item nav-link" th:href="@{/app/logout}">Sign Out</a>
+                    <a class="nav-item nav-link" th:href="@{/app/logout}">
+                        <span th:text="#{lang.header.fragment.logOut}"></span></a>
                 </div>
             </div>
         </nav>

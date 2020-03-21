@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>modalToAddNewClient</title>
+<style>
+
+</style>
+<body>
+<div th:fragment="confirm">
+    <div class="myFormToDeleteAppo">
+        <div class="modal fade" id="deleteAppoModal" tabindex="-1" role="dialog" aria-labelledby="deleteAppoModal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="alert alert-danger">
+                            Czy na pewno usunąć?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="" id="delRef1" class="btn btn-danger">Usuń</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

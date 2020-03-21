@@ -76,9 +76,10 @@ $(document).ready(function() {
         var selectedOption = $('#locales').val();
         if (selectedOption != ''){
             window.location.replace('?lang=' + selectedOption);
-        }
+        };
     });
 });
+
 $(document).ready(function() {
     $('#chosenHour').on('change', function() {
         $('#hourFinished').val($(this).val());
@@ -104,7 +105,53 @@ $(document).ready(function () {
      document.getElementById('hourFinished').stepDown($('#minutes').find(':selected').val());
     });
 });
-
+//
+$(document).ready(function() {
+    $("#locales").change(function () {
+        var selectedOption = $('#locales').val();
+        if(selectedOption == 'en-US'){
+        alert('ENENENE');
+        $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US']);
+        $('#table').bootstrapTable({
+            locale: 'en-US'})
+        } else if(selectedOption == 'pl-PL'){
+        alert('PLPLPLP');
+        $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['pl-PL']);
+        $('#table').bootstrapTable({
+            locale: 'pl-PL'});
+        };
+   });
+});
+//alert("1010101010101");
+//  if($(this).val() == 'en-US'){
+//    // or this.value == 'volvo'
+//    $('#clientTable').bootstrapTable("destroy");
+//    $('#clientTable').bootstrapTable({
+//      locale: 'en-US'
+//    });
+//    $('#table').bootstrapTable({
+//      locale: 'en-US'
+//    });
+//    $table.bootstrapTable({
+//      locale: 'en-US'
+//    });
+////    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US'])
+//    alert('enenenenenene');
+//  }
+//    else ($(this).val() == 'pl-PL'){
+//      // or this.value == 'volvo'
+//      $('#clientTable').bootstrapTable("destroy");
+//      $('#clientTable').bootstrapTable({
+//        locale: 'pl-PL'
+//      });
+//      $('#table').bootstrapTable({
+//        locale: 'pl-PL'
+//      });
+//      alert('plplplpl')
+//    };
+//
+//},1500);
+//});
 
 
 

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>modalToAddNewClient</title>
+<style>
+
+</style>
+<body>
+<div th:fragment="confirm">
+    <div class="myFormToAddAppointment">
+        <form th:action="@{/app/appointments/save}" method="post">
+            <div class="modal fade" id="addAppointmentModal" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="AppointmentModal">Dodaj Zabieg</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="id" class="col-form-label">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" value="" disabled/>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label for="clientId" class="col-form-label">ID</label>
+                                <input type="text" class="form-control" id="clientId" name="clientId" value=""/>
+                            </div>
+                            <div class="form-group">
+                                <label for="chosenDay" class="col-form-label">Dzień:</label>
+                                <input type="date" class="form-control" id="chosenDay" name="chosenDay" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameOfTreatment" class="col-form-label">Nazwa Zabiegu:</label>
+                                <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
+                                       value="" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="chosenHour" class="col-form-label">Godzina Rozpoczęcia:</label>
+                                <input type="time" class="form-control" id="chosenHour" name="chosenHour" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Zmień czas trwania o: </label>
+                                <select id="minutes" name="minutes">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                    <option value="60">60</option>
+                                </select> minut
+                                <input type="button" id="buttonAddMinutes" value="Zwiększ">
+                                <input type="button" id="buttonSubtractMinutes" value="Zmniejsz">
+                            </div>
+                            <div class="form-group">
+                                <label for="hourFinished" class="col-form-label">Godzina Zakończenia:</label>
+                                <input type="time" class="form-control" id="hourFinished" name="hourFinished" value=""
+                                       required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="price" class="col-form-label">Cena:</label>
+                                <input type="text" class="form-control" id="price" name="price" value="" required/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

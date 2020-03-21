@@ -5,11 +5,11 @@
       layout:decorate="~{fragments/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title><span th:text="#{lang.error.404.title}"></span></title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    ERROR
+    <span th:text="#{lang.error.404.error}"></span>
 </div>
 </body>
 </html>

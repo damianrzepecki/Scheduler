@@ -3,8 +3,10 @@ package pl.sda.scheduler.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class HomeController {
 
     @GetMapping("/")
@@ -14,12 +16,12 @@ public class HomeController {
 
     @GetMapping("/app/loggedIn")
     public String getLoggedIn() {
-        return "/loggedIn/index";
+        return "loggedIn";
     }
 
     @PostMapping("/app/loggedIn")
     public String loggedIn() {
-        return "/loggedIn/index";
+        return "redirect:/app/loggedIn";
     }
 
     @GetMapping("/login")
@@ -34,8 +36,9 @@ public class HomeController {
 
     @GetMapping("/app/logout")
     public String logout() {
-        return "logout";
+        return "redirect:/";
     }
+
     @GetMapping("/app/calendar")
     public String calendar() {
         return "/calendar/calendar";

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <script></script>
+</head>
+    <body>
+        <div layout:fragment="content" th:remove="tag">
+            <h1><span th:text="#{lang.loggedIn.page.securedPageH1}"></span></h1>
+            <div sec:authorize="isAuthenticated()">
+                <h2><span th:text="#{lang.loggedIn.page.securedPageH2}"></span></h2>
+            </div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <span th:text="#{lang.loggedIn.page.shownToAdmin}"></span>
+            </div>
+            <div sec:authorize="hasRole('ROLE_USER')">
+                <h2><span th:text="#{lang.loggedIn.page.shownToUser}"></span></h2>
+            </div>
+        </div>
+    </body>
+</html>
