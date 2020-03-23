@@ -42,6 +42,7 @@ $(document).ready(function () {
         $.get(href, function (client) {
             $('.myFormToAddAppointment #id').val(client.id);
             $('.myFormToAddAppointment #clientId').val(client.id);
+            $('.myFormToAddAppointment #clientData').val(client.name+" "+client.surname);
         });
         $('.myFormToAddAppointment #addAppointmentModal').modal();
     });
@@ -122,36 +123,7 @@ $(document).ready(function() {
         };
    });
 });
-//alert("1010101010101");
-//  if($(this).val() == 'en-US'){
-//    // or this.value == 'volvo'
-//    $('#clientTable').bootstrapTable("destroy");
-//    $('#clientTable').bootstrapTable({
-//      locale: 'en-US'
-//    });
-//    $('#table').bootstrapTable({
-//      locale: 'en-US'
-//    });
-//    $table.bootstrapTable({
-//      locale: 'en-US'
-//    });
-////    $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US'])
-//    alert('enenenenenene');
-//  }
-//    else ($(this).val() == 'pl-PL'){
-//      // or this.value == 'volvo'
-//      $('#clientTable').bootstrapTable("destroy");
-//      $('#clientTable').bootstrapTable({
-//        locale: 'pl-PL'
-//      });
-//      $('#table').bootstrapTable({
-//        locale: 'pl-PL'
-//      });
-//      alert('plplplpl')
-//    };
-//
-//},1500);
-//});
+
 
 
 
