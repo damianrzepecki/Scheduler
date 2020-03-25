@@ -11,12 +11,15 @@
 <body>
 <div layout:fragment="content" th:remove="tag">
     <div class="card">
+        <div>
+            <button id="langChangePL">PL</button>
+            <button id="langChangeEN">EN</button>
+        </div>
         <div class="card-body">
             <table data-toggle="table"
                    data-pagination="true"
-
                    data-search="true"
-                   id="clientTable"
+                   id="table"
                    class="table table-borderless">
                 <thead class="thead-dark">
                 <tr>

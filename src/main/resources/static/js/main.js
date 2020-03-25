@@ -108,22 +108,19 @@ $(document).ready(function () {
 });
 //
 $(document).ready(function() {
-    $("#locales").change(function () {
-        var selectedOption = $('#locales').val();
-        if(selectedOption == 'en-US'){
-        alert('ENENENE');
-        $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['en-US']);
-        $('#table').bootstrapTable({
-            locale: 'en-US'})
-        } else if(selectedOption == 'pl-PL'){
-        alert('PLPLPLP');
-        $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales['pl-PL']);
-        $('#table').bootstrapTable({
-            locale: 'pl-PL'});
-        };
+    $('#langChangePL').on('click', function () {
+    $('#table').bootstrapTable('destroy').bootstrapTable({
+          locale: 'pl-PL'});
+    alert('PLPLPLP');
    });
 });
-
+$(document).ready(function() {
+    $('#langChangeEN').on('click', function () {
+    $('#table').bootstrapTable('destroy').bootstrapTable({
+          locale: 'en-US'});
+    alert('USUS');
+   });
+});
 
 
 
