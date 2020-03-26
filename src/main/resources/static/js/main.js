@@ -122,5 +122,39 @@ $(document).ready(function() {
    });
 });
 
+$(document).ready(function () {
+	$("#buttonToSaveClient").click(function(event){
+
+        var data = {};
+        data['name'] = $('#name').val();
+        data['surname'] = $('#surname').val();
+        data['dateOfBirth'] = $('#dateOfBirth').val();
+        data['phoneNumber'] = $('#phoneNumber').val();
+        data['email'] = $('#email').val();
+
+        $("#buttonToSaveClient").prop("disabled", true);
+
+        $.ajax({
+             type: "POST",
+             contentType: "application/json; charset=utf-8",
+             url: "/app/clients/save",
+             data: JSON.stringify(data),
+             dataType: 'json',
+             timeout: 600000,
+             success: function (data) {
+                 $("#buttonToSaveClient").prop("disabled", false);
+                 console.log("SUCCESS: ", data);
+                 //...
+             },
+             error: function (e) {
+                 console.log("ERROR: ", e);
+                 				display(e);
+             },
+             done : function(e) {
+                console.log("DONE");
+             }
+			});
+		});
+	});
 
 

@@ -30,9 +30,8 @@ public class ClientController {
 
         return "client/clients";
     }
-
-    @PostMapping("/save")
-    String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
+    @RequestMapping(value="/save", method=RequestMethod.POST, consumes={"application/json"})
+    @ResponseBody String saveClient(@Valid @ModelAttribute("clientDTO") @RequestBody ClientDTO clientDTO, BindingResult bindingResult) {
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
         if (clientExists != null) {
             bindingResult.rejectValue("email", "Email", "Email TAKEN");

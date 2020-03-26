@@ -6,7 +6,7 @@
 <body>
 <div th:fragment="confirm">
     <div class="myFormToAddNew">
-        <form th:action="@{/app/clients/save}" method="post" modelAttribute="client" th:object="${clientDTO}" id="formToAddNew">
+        <form th:action="@{/app/clients/save}" method="post" modelAttribute="client" th:object="${clientDTO}" id="formToAddNewClient">
             <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
@@ -65,7 +65,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                 <span th:text="#{lang.modal.clientAdd.close}"></span></button>
-                            <button type="submit" id="buttonToSave" class="btn btn-primary" value="save">
+                            <button type="button" id="buttonToSaveClient" class="btn btn-primary" value="save">
                                 <span th:text="#{lang.modal.clientAdd.save}"></span></button>
                     </div>
                 </div>
