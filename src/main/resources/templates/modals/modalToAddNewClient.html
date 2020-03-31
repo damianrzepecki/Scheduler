@@ -4,9 +4,9 @@
 
     </style>
 <body>
-<div th:fragment="confirm">
+<div th:fragment="myFormToAddNew">
     <div class="myFormToAddNew">
-        <form th:action="@{/app/clients/save}" method="post" modelAttribute="client" th:object="${clientDTO}" id="formToAddNewClient">
+        <form method="post" modelAttribute="client" th:object="${clientDTO}" id="formToAddNewClient">
             <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
@@ -27,7 +27,7 @@
                                 <label for="name" class="col-form-label">
                                     <span th:text="#{lang.modal.clientAdd.name}"></span></label>
                                 <input type="text" class="form-control" id="name" name="name" value="" required/>
-                                <p th:if="${#fields.hasErrors('name')}" class="label label-danger"
+                                <p th:if="${#fields.hasErrors('name')}?has-error" class="label label-danger"
                                    th:errors="*{name}"></p>
                             </div>
                             <div class="form-group">
@@ -58,7 +58,7 @@
                                        required
                                        oninvalid="this.setCustomValidity('np. \'email@dom.com\'')"
                                        onchange="this.setCustomValidity('')"/>
-                                <p th:if="${#fields.hasErrors('email')}" class="label label-danger"
+                                <p th:if="${#fields.hasErrors('email')}?has-error" class="label label-danger"
                                    th:errors="*{email}"></p>
                             </div>
                         </div>

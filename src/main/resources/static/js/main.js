@@ -123,51 +123,26 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
-	$("#buttonToSaveClient").click(function(event){
-
-//        var data = {
-//        name : $('#name').val(),
-//        surname : $('#surname').val(),
-//        dateOfBirth : $('#dateOfBirth').val(),
-//        phoneNumber : $('#phoneNumber').val(),
-//        email : $('#email').val()
-//        }
+    $("#buttonToSaveClient").click(function(event){
+        event.preventDefault();
         var data = $('#formToAddNewClient').serialize();
-        $("#buttonToSaveClient").prop("disabled", true);
-
         $.ajax({
-             type: "POST",
-//             contentType: "application/json; charset=utf-8",
-             url: "/app/clients/save",
-             data: data,
-             dataType: 'json',
-             timeout: 600000,
-                    success : function(response) {
-                                    if (response.status == 'FAIL') {
-                                        for ( var val in errMessages) {
-                                            var $errorLabel = $.find('#' + val
-                                                    + 'ErrorLabel');
-                                            $errorLabel.html(errMessages[val]);
-                                        }
-                                    }
-                                },
-                                error : function(data) {
-                                    console.log("data on fail " + data);
-                                },
-//             success: function (data) {
-//                 $("#buttonToSaveClient").prop("disabled", false);
-//                 console.log("SUCCESS: ", data);
-//                 //...
-//             },
-//             error: function (e) {
-//                 console.log("ERROR: ", e);
-//                 				display(e);
-//             },
-//             done : function(e) {
-//                console.log("DONE");
-//             }
-			});
-		});
-	});
+            type: "POST",
+            url: "/app/clients/save",
+            data: data,
+            dataType: "json",
+            success: function(response) {
+                if(response.status == "SUCCESS"){
+                    alert("Success")
+                    $("#formToAddNewClient").submit();
+                    window.location.reload()
+                }
+            },
+            error: function(error){
+                alert("Error" + error)
+            }
+        });
+    });
+});
 
 

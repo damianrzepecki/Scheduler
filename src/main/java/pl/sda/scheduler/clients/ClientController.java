@@ -35,19 +35,20 @@ public class ClientController {
     @ResponseBody
     JsonResponse saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
         System.out.println(clientDTO);
-        JsonResponse res = new JsonResponse();
+        JsonResponse response = new JsonResponse();
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
         if (clientExists != null) {
-            bindingResult.rejectValue("email", "Email", "Email TAKEN");
+            bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
-            res.setStatus("FAIL");
-            res.setResult(bindingResult.getAllErrors());
-        } else
-            res.setStatus("SUCCESS");
+            response.setStatus("FAIL");
+            response.setResult(bindingResult.getAllErrors());
+        } else {
             clientService.addNewClient(clientMapper.clientDTOtoClient(clientDTO));
-        return res;
+            response.setStatus("SUCCESS");
+        }
+        return response;
     }
 
     @PostMapping("/update")
