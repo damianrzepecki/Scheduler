@@ -122,23 +122,27 @@ $(document).ready(function() {
    });
 });
 
-$(document).ready(function () {
-    $('#buttonToSaveClient').click(function(event){
+$(document).ready(function() {
+$(document).on('submit', "#formToAddNewClient", function (event) {
+
+//    $('#formToAddNewClient').submit(function(event){
+        event.preventDefault();
         var $form = $('#formToAddNewClient');
 //        var data = $('#formToAddNewClient').serialize();
         $.ajax({
             type: 'POST',
             url: '/app/clients/save',
             data: $form.serialize(),
+            dataType: "html",
             success: function(response) {
                 if($(response).find('.errorFound').length){
 
                    alert('Error found')
-                   $('.modal-body').html(response)
+                   $('#addNewClient').html(response)
                    $('#addClientModal').modal('show');
                 }
                 else{
-                $form.submit()
+//                $form.submit()
                 window.location.reload()
                 }
             },
@@ -146,6 +150,7 @@ $(document).ready(function () {
             alert(error)
             }
         });
+        return false;
     });
 });
 

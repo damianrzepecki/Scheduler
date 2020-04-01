@@ -41,6 +41,7 @@ public class ClientController {
             bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
+            System.out.println("===========ERROR================");
             System.out.println(bindingResult);
             return "client/clients :: addNewClient";
         } else {
