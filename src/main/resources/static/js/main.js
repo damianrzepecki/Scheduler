@@ -123,23 +123,27 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
-    $("#buttonToSaveClient").click(function(event){
-        event.preventDefault();
-        var data = $('#formToAddNewClient').serialize();
+    $('#buttonToSaveClient').click(function(event){
+        var $form = $('#formToAddNewClient');
+//        var data = $('#formToAddNewClient').serialize();
         $.ajax({
-            type: "POST",
-            url: "/app/clients/save",
-            data: data,
-            dataType: "json",
+            type: 'POST',
+            url: '/app/clients/save',
+            data: $form.serialize(),
             success: function(response) {
-                if(response.status == "SUCCESS"){
-                    alert("Success")
-                    $("#formToAddNewClient").submit();
-                    window.location.reload()
+                if($(response).find('.errorFound').length){
+
+                   alert('Error found')
+                   $('.modal-body').html(response)
+                   $('#addClientModal').modal('show');
+                }
+                else{
+                $form.submit()
+                window.location.reload()
                 }
             },
             error: function(error){
-                alert("Error" + error)
+            alert(error)
             }
         });
     });

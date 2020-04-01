@@ -32,23 +32,21 @@ public class ClientController {
     }
 
     @PostMapping("/save")
-    @ResponseBody
-    JsonResponse saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
+    String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult, Model model) {
         System.out.println(clientDTO);
         JsonResponse response = new JsonResponse();
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
+        System.out.println(clientExists);
         if (clientExists != null) {
             bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
-            response.setStatus("FAIL");
-            response.setResult(bindingResult.getAllErrors());
+            return "client/clients :: addNewClient";
         } else {
             clientService.addNewClient(clientMapper.clientDTOtoClient(clientDTO));
-            response.setStatus("SUCCESS");
         }
-        return response;
+        return "redirect:/app/clients";
     }
 
     @PostMapping("/update")

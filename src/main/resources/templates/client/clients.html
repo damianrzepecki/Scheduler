@@ -62,7 +62,9 @@
             </table>
         </div>
     </div>
-    <div th:include="modals/modalToAddNewClient :: myFormToAddNew"></div>
+    <div id="addNewClient" th:fragment="addNewClient">
+        <div th:include="modals/modalToAddNewClient :: myFormToAddNew"></div>
+    </div>
     <div th:include="modals/modalToUpdateClientData :: myFormToUpdate"></div>
     <div th:include="modals/modalToDeleteClient :: myFormToDelete"></div>
     <div th:include="modals/modalToAddAppointment :: myFormToAddAppointment"></div>
