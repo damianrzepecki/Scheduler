@@ -21,6 +21,7 @@ public class ClientDTO {
     @Size(min = 2, max = 20)
     private String name;
     @NotNull
+    @Size(min = 2, max = 20)
     private String surname;
     @NotNull
     private String dateOfBirth;

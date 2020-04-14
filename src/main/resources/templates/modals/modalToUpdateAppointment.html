@@ -5,11 +5,10 @@
 
 </style>
 <body>
-<div th:fragment="myFormToUpdateAppo">
-    <div class="myFormToUpdateAppo">
+<div th:fragment="myFormToUpdateAppointment">
+    <div class="myFormToUpdateAppointment">
         <form th:action="@{/app/appointments/update/}" method="post">
-            <div class="modal fade" id="editAppoModal" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="editAppointmentModal" tabindex="-1" role="dialog"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -23,43 +22,43 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="id" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.id}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.id}"></span></label>
                                 <input type="text" class="form-control" id="id" name="id" value="" readonly/>
                             </div>
                             <div class="form-group" hidden>
                                 <label for="clientId" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.clientID}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.clientID}"></span></label>
                                 <input type="text" class="form-control" id="clientId" name="clientId" value=""
                                        required readonly/>
                             </div>
                             <div class="form-group">
                                 <label for="clientData" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.clientData}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.clientData}"></span></label>
                                 <input type="text" class="form-control" id="clientData" name="clientData" value=""
                                        required readonly/>
                             </div>
                             <div class="form-group">
                                 <label for="chosenDay" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.day}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.day}"></span></label>
                                 <input type="date" class="form-control" id="chosenDay" name="chosenDay" value=""
                                        required/>
                             </div>
                             <div class="form-group">
                                 <label for="nameOfTreatment" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.treatmentName}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.treatmentName}"></span></label>
                                 <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
                                        value=""
                                        required/>
                             </div>
                             <div class="form-group">
                                 <label for="chosenHour" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.startingHour}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.startingHour}"></span></label>
                                 <input type="time" class="form-control" id="chosenHour" name="chosenHour" value=""
                                        required/>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.duration}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.duration}"></span></label>
                                 <select id="minutes" name="minutes">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
@@ -72,38 +71,35 @@
                                     <option value="50">50</option>
                                     <option value="55">55</option>
                                     <option value="60">60</option>
-                                </select><span th:text="#{lang.modal.appointmentADD.durationMinutes}"></span>
+                                </select><span th:text="#{lang.modal.appointment.durationMinutes}"></span>
                                 <button type="button" id="buttonAddMinutes">
-                                    <span th:text="#{lang.modal.appointmentADD.add}"></span></button>
+                                    <span th:text="#{lang.modal.appointment.add}"></span></button>
                                 <button type="button" id="buttonSubtractMinutes">
-                                    <span th:text="#{lang.modal.appointmentADD.subtract}"></span></button>
+                                    <span th:text="#{lang.modal.appointment.subtract}"></span></button>
                             </div>
                             <div class="form-group">
                                 <label for="hourFinished" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.endingHour}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.endingHour}"></span></label>
                                 <input type="time" class="form-control" id="hourFinished" name="hourFinished" value=""
                                        required/>
                             </div>
                             <div class="form-group">
                                 <label for="price" class="col-form-label">
-                                    <span th:text="#{lang.modal.appointmentADD.price}"></span></label>
+                                    <span th:text="#{lang.modal.appointment.price}"></span></label>
                                 <input type="text" class="form-control" id="price" name="price" value="" required/>
                             </div>
                         </div>
-
-
-                    </div>
-                    <div class="modal-footer">
+                        <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            <span th:text="#{lang.modal.appointmentADD.close}"></span></button>
-                        <button type="submit" class="btn btn-primary" value="save">
-                            <span th:text="#{lang.modal.appointmentADD.save}"></span></button>
+                            <span th:text="#{lang.modal.appointment.close}"></span></button>
+                        <button type="submit" class="btn btn-primary">
+                            <span th:text="#{lang.modal.appointment.save}"></span></button>
+                        </div>
                     </div>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
-</div>
 </div>
 </body>
 </html>

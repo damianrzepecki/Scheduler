@@ -42,17 +42,17 @@
                     <td th:text="${appo.clientData}"></td>
                     <td>
                         <a th:href="@{/app/appointments/findOne/(id=${appo.id})}"
-                           class="btn btn-primary eBtnEditAppo">Edytuj</a>
+                           class="btn btn-primary buttonToEditAppointment">Edytuj</a>
                         <a th:href="@{/app/appointments/delete/(id=${appo.id})}"
-                           class="btn btn-danger delBtnAppo">Usuń</a>
+                           class="btn btn-danger buttonToDeleteAppointment">Usuń</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div th:include="modals/modalToUpdateAppointment :: myFormToUpdateAppo"></div>
-    <div th:include="modals/modalToDeleteAppointment :: myFormToDeleteAppo"></div>
+    <div th:include="modals/modalToUpdateAppointment :: myFormToUpdateAppointment"></div>
+    <div th:include="modals/modalToDeleteAppointment :: myFormToDeleteAppointment"></div>
 
 </div>
 </body>

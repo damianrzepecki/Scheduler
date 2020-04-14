@@ -9,4 +9,5 @@ interface ClientRepository extends JpaRepository<Client, Long> {
     
     List<Client> findBySurname(@Param("surname") String surname);
     Client findByEmail(String email);
+
 }

@@ -32,16 +32,14 @@ public class ClientController {
     }
 
     @PostMapping("/save")
-    String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult, Model model) {
-        System.out.println(clientDTO);
-        JsonResponse response = new JsonResponse();
+    String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
         System.out.println(clientExists);
         if (clientExists != null) {
             bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
-            System.out.println("===========ERROR================");
+            System.out.println("================ERROR================");
             System.out.println(bindingResult);
             return "client/clients :: addNewClient";
         } else {
@@ -51,8 +49,23 @@ public class ClientController {
     }
 
     @PostMapping("/update")
-    String updateClientData(ClientDTO clientDTO) {
-        clientService.updateAllClientData(clientMapper.clientDTOtoClient(clientDTO));
+    String updateClientData(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
+        Client clientExists = clientService.findByEmail(clientDTO.getEmail());
+        Optional<Client> clientCurrent = clientService.findById(clientDTO.getId());
+        if(clientCurrent.get().getEmail().equals(clientExists.getEmail())){
+            clientExists=null;
+        }
+        System.out.println(clientExists);
+        if (clientExists != null) {
+            bindingResult.rejectValue("email", "email");
+        }
+        if (bindingResult.hasErrors()) {
+            System.out.println("================ERROR================");
+            System.out.println(bindingResult);
+            return "client/clients :: updateClient";
+        } else {
+            clientService.updateAllClientData(clientMapper.clientDTOtoClient(clientDTO));
+        }
         return "redirect:/app/clients";
     }
 

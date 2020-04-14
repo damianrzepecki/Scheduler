@@ -4,13 +4,12 @@
 
 </style>
 <body>
-<div th:fragment="myFormToAddNew">
-    <div class="myFormToAddNew">
+<div th:fragment="myFormToAddNewClient">
+    <div class="myFormToAddNewClient">
         <form method="post" th:action="@{/app/clients/save}" modelAttribute="client" th:object="${clientDTO}"
               id="formToAddNewClient">
             <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
+                 aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -26,26 +25,28 @@
                             </div>
                             <div class="form-group">
                                 <label for="name" class="col-form-label">
-                                    <span th:text="#{lang.modal.clientAdd.name}"></span></label>
+                                    <span th:text="#{lang.modal.client.name}"></span></label>
                                 <input type="text" class="form-control" id="name" name="name" value="" required/>
                                 <p th:if="${#fields.hasErrors('name')}" class="label label-danger"
-                                   th:errors="*{name}"></p>
+                                   th:errors="*{name}" style="color:red;" ></p>
                             </div>
                             <div class="form-group">
                                 <label for="surname" class="col-form-label">
-                                    <span th:text="#{lang.modal.clientAdd.surname}"></span></label>
+                                    <span th:text="#{lang.modal.client.surname}"></span></label>
                                 <input type="text" class="form-control" id="surname" name="surname" value=""
                                        required/>
+                                <p th:if="${#fields.hasErrors('surname')}" class="label label-danger"
+                                   th:errors="*{surname}" style="color:red;" ></p>
                             </div>
                             <div class="form-group">
                                 <label for="dateOfBirth" class="col-form-label">
-                                    <span th:text="#{lang.modal.clientAdd.dob}"></span></label>
+                                    <span th:text="#{lang.modal.client.dob}"></span></label>
                                 <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" value=""
                                        required/>
                             </div>
                             <div class="form-group">
                                 <label for="phoneNumber" class="col-form-label">
-                                    <span th:text="#{lang.modal.clientAdd.phoneNumber}"></span></label>
+                                    <span th:text="#{lang.modal.client.phoneNumber}"></span></label>
                                 <input type="tel" pattern="[0-9]{9}" class="form-control" id="phoneNumber"
                                        name="phoneNumber" value="" required
                                        oninvalid="this.setCustomValidity('Podaj 9 cyfr')"
@@ -53,21 +54,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="email" class="col-form-label">
-                                    <span th:text="#{lang.modal.clientAdd.email}"></span></label>
+                                    <span th:text="#{lang.modal.client.email}"></span></label>
                                 <input type="email" class="form-control" id="email" name="email"
                                        value=""
                                        required
                                        oninvalid="this.setCustomValidity('np. \'email@dom.com\'')"
                                        onchange="this.setCustomValidity('')"/>
                                 <p th:if="${#fields.hasErrors('email')}" class="label label-danger"
-                                   th:errors="*{email}"></p>
+                                   th:errors="*{email}" style="color:red;" ></p>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                <span th:text="#{lang.modal.clientAdd.close}"></span></button>
+                                <span th:text="#{lang.modal.client.close}"></span></button>
                             <button type="submit" id="buttonToSaveClient" class="btn btn-primary" value="save">
-                                <span th:text="#{lang.modal.clientAdd.save}"></span></button>
+                                <span th:text="#{lang.modal.client.save}"></span></button>
                         </div>
                     </div>
                 </div>

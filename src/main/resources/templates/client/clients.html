@@ -30,7 +30,7 @@
                     <th th:text="#{lang.clients.page.table.phoneNumber}"></th>
                     <th th:text="#{lang.clients.page.table.email}"></th>
                     <th th:text="#{lang.clients.page.table.dateRegistered}" data-sortable="true"></th>
-                    <th><a class="btn btn-primary eBtn1" th:text="#{lang.clients.page.table.add}"></a></th>
+                    <th><a class="btn btn-primary buttonToAddNewClient" th:text="#{lang.clients.page.table.add}"></a></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -46,27 +46,30 @@
                     <td th:text="${client.dateRegistered}"></td>
                     <td>
                         <a th:href="@{/app/clients/findOne/(id=${client.id})}" th:text="#{lang.clients.page.table.edit}"
-                           class="btn btn-primary eBtn2"></a>
-                    </td>
-                    <td>
-                        <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger delBtn">
-                            <span th:text="#{lang.clients.page.table.delete}"></span></a>
+                           class="btn btn-primary buttonToUpdateClient"></a>
                     </td>
                     <td>
                         <a th:href="@{/app/clients/findOne/(id=${client.id})}"
-                           class="btn btn-warning treatBtn">
+                           class="btn btn-warning buttonToAddAppointment">
                             <span th:text="#{lang.clients.page.table.treatment}"></span></a>
                     </td>
+                    <td>
+                        <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger buttonToDeleteClient">
+                            <span th:text="#{lang.clients.page.table.delete}"></span></a>
+                    </td>
+
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <div id="addNewClient" th:fragment="addNewClient">
-        <div th:include="modals/modalToAddNewClient :: myFormToAddNew"></div>
+        <div th:include="modals/modalToAddNewClient :: myFormToAddNewClient"></div>
     </div>
-    <div th:include="modals/modalToUpdateClientData :: myFormToUpdate"></div>
-    <div th:include="modals/modalToDeleteClient :: myFormToDelete"></div>
+    <div id="updateClient" th:fragment="updateClient">
+        <div th:include="modals/modalToUpdateClientData :: myFormToUpdateClient"></div>
+    </div>
+    <div th:include="modals/modalToDeleteClient :: myFormToDeleteClient"></div>
     <div th:include="modals/modalToAddAppointment :: myFormToAddAppointment"></div>
 
 </div>

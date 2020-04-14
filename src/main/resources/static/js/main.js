@@ -1,42 +1,34 @@
 $(document).ready(function () {
-    $('.table .eBtn1').on('click', function (event) {
+    $('.table .buttonToAddNewClient').on('click', function (event) {
+        event.preventDefault();
+        $('.myFormToAddNewClient #addClientModal').modal();
+    });
+});
+$(document).ready(function () {
+    $('.table .buttonToUpdateClient').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
         $.get(href, function (client) {
-            $('.myFormToAddNew #name').val(client.name);
-            $('.myFormToAddNew #surname').val(client.surname);
-            $('.myFormToAddNew #dateOfBirth').val(client.dateOfBirth);
-            $('.myFormToAddNew #phoneNumber').val(client.phoneNumber);
-            $('.myFormToAddNew #email').val(client.email);
+            $('.myFormToUpdateClient #id').val(client.id);
+            $('.myFormToUpdateClient #name').val(client.name);
+            $('.myFormToUpdateClient #surname').val(client.surname);
+            $('.myFormToUpdateClient #dateOfBirth').val(client.dateOfBirth);
+            $('.myFormToUpdateClient #phoneNumber').val(client.phoneNumber);
+            $('.myFormToUpdateClient #email').val(client.email);
         });
-        $('.myFormToAddNew #addClientModal').modal();
+        $('.myFormToUpdateClient #updateClientModal').modal();
     });
 });
 $(document).ready(function () {
-    $('.table .eBtn2').on('click', function (event) {
+    $('.table .buttonToDeleteClient ').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        $.get(href, function (client) {
-            $('.myFormToUpdate #id').val(client.id);
-            $('.myFormToUpdate #name').val(client.name);
-            $('.myFormToUpdate #surname').val(client.surname);
-            $('.myFormToUpdate #dateOfBirth').val(client.dateOfBirth);
-            $('.myFormToUpdate #phoneNumber').val(client.phoneNumber);
-            $('.myFormToUpdate #email').val(client.email);
-        });
-        $('.myFormToUpdate #editClientModal').modal();
+        $('.myFormToDeleteClient #deleteClientButton').attr('href', href);
+        $('.myFormToDeleteClient #deleteClientModal').modal();
     });
 });
 $(document).ready(function () {
-    $('.table .delBtn ').on('click', function (event) {
-        event.preventDefault();
-        var href = $(this).attr('href');
-        $('.myFormToDelete #delRef').attr('href', href);
-        $('.myFormToDelete #deleteModal').modal();
-    });
-});
-$(document).ready(function () {
-    $('.table .treatBtn').on('click', function (event) {
+    $('.table .buttonToAddAppointment').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
         $.get(href, function (client) {
@@ -48,28 +40,28 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
-    $('.table .eBtnEditAppo').on('click', function (event) {
+    $('.table .buttonToEditAppointment').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
         $.get(href, function (appointment) {
-            $('.myFormToUpdateAppo #id').val(appointment.id);
-            $('.myFormToUpdateAppo #chosenDay').val(appointment.chosenDay);
-            $('.myFormToUpdateAppo #chosenHour').val(appointment.chosenHour);
-            $('.myFormToUpdateAppo #nameOfTreatment').val(appointment.nameOfTreatment);
-            $('.myFormToUpdateAppo #hourFinished').val(appointment.hourFinished);
-            $('.myFormToUpdateAppo #price').val(appointment.price);
-            $('.myFormToUpdateAppo #clientId').val(appointment.clientId);
-            $('.myFormToUpdateAppo #clientData').val(appointment.clientData);
+            $('.myFormToUpdateAppointment #id').val(appointment.id);
+            $('.myFormToUpdateAppointment #chosenDay').val(appointment.chosenDay);
+            $('.myFormToUpdateAppointment #chosenHour').val(appointment.chosenHour);
+            $('.myFormToUpdateAppointment #nameOfTreatment').val(appointment.nameOfTreatment);
+            $('.myFormToUpdateAppointment #hourFinished').val(appointment.hourFinished);
+            $('.myFormToUpdateAppointment #price').val(appointment.price);
+            $('.myFormToUpdateAppointment #clientId').val(appointment.clientId);
+            $('.myFormToUpdateAppointment #clientData').val(appointment.clientData);
         });
-        $('.myFormToUpdateAppo #editAppoModal').modal();
+        $('.myFormToUpdateAppointment #editAppointmentModal').modal();
     });
 });
 $(document).ready(function () {
-    $('.table .delBtnAppo ').on('click', function (event) {
+    $('.table .buttonToDeleteAppointment ').on('click', function (event) {
         event.preventDefault();
         var href = $(this).attr('href');
-        $('.myFormToDeleteAppo #delRef1').attr('href', href);
-        $('.myFormToDeleteAppo #deleteAppoModal').modal();
+        $('.myFormToDeleteAppointment #deleteAppointmentButton').attr('href', href);
+        $('.myFormToDeleteAppointment #deleteAppointmentModal').modal();
     });
 });
 $(document).ready(function() {
@@ -124,11 +116,9 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 $(document).on('submit', "#formToAddNewClient", function (event) {
-
-//    $('#formToAddNewClient').submit(function(event){
         event.preventDefault();
         var $form = $('#formToAddNewClient');
-//        var data = $('#formToAddNewClient').serialize();
+        var serializedForm = $form.serializeArray();
         $.ajax({
             type: 'POST',
             url: '/app/clients/save',
@@ -136,13 +126,54 @@ $(document).on('submit', "#formToAddNewClient", function (event) {
             dataType: "html",
             success: function(response) {
                 if($(response).find('.errorFound').length){
-
-                   alert('Error found')
-                   $('#addNewClient').html(response)
-                   $('#addClientModal').modal('show');
+                    $('body').removeClass('modal-open')
+                    $('.modal-backdrop').remove()
+                    $('#addNewClient').html(response)
+                    $('#addClientModal').modal('show')
+                    $('#name').val(serializedForm[1].value);
+                    $('#surname').val(serializedForm[2].value);
+                    $('#dateOfBirth').val(serializedForm[3].value)
+                    $('#phoneNumber').val(serializedForm[4].value)
+                    $('#email').val(serializedForm[5].value)
                 }
                 else{
-//                $form.submit()
+                window.location.reload()
+                }
+            },
+            error: function(error){
+            alert(error)
+            }
+        });
+        return false;
+    });
+});
+
+$(document).ready(function() {
+$(document).on('submit', "#formToUpdateClient", function (event) {
+        event.preventDefault();
+        var $form = $('#formToUpdateClient');
+        var serializedForm = $form.serializeArray();
+        $.ajax({
+            type: 'POST',
+            url: '/app/clients/update',
+            data: $form.serialize(),
+            dataType: "html",
+            success: function(response) {
+                if($(response).find('.errorFound').length){
+                    console.log(serializedForm)
+                    $('body').removeClass('modal-open')
+                    $('.modal-backdrop').remove()
+                    $('#updateClient').html(response)
+                    $('#updateClientModal').modal('show')
+                    $('#id').val(serializedForm[1].value);
+                    console.log(serializedForm[2].value)
+                    $('#name').val(serializedForm[2].value);
+                    $('#surname').val(serializedForm[3].value);
+                    $('#dateOfBirth').val(serializedForm[4].value)
+                    $('#phoneNumber').val(serializedForm[5].value)
+                    $('#email').val(serializedForm[6].value)
+                }
+                else{
                 window.location.reload()
                 }
             },
