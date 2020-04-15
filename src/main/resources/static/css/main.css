@@ -1,3 +1,7 @@
+body {
+    padding-right: 0 !important
+}
+
 .container {
     min-width: 1300px;
     /*height: 95vh;*/

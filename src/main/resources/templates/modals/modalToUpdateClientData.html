@@ -1,10 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<title>modalToUpdateClientData</title>
 <style>
 
 </style>
-<body>
 <div th:fragment="myFormToUpdateClient">
     <div class="myFormToUpdateClient">
         <form th:action="@{/app/clients/update/}" method="post" modelAttribute="client" th:object="${clientDTO}"
@@ -81,5 +79,3 @@
         </form>
     </div>
 </div>
-</body>
-</html>

@@ -3,10 +3,9 @@
 <style>
 
 </style>
-<body>
 <div th:fragment="myFormToAddNewClient">
     <div class="myFormToAddNewClient">
-        <form method="post" th:action="@{/app/clients/save}" modelAttribute="client" th:object="${clientDTO}"
+        <form th:action="@{/app/clients/save}" method="post" modelAttribute="client" th:object="${clientDTO}"
               id="formToAddNewClient">
             <div class="modal fade" id="addClientModal" tabindex="-1" role="dialog"
                  aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -15,7 +14,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="addModalLabel">
                                 <span th:text="#{lang.modal.clientAdd.label}"></span></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>

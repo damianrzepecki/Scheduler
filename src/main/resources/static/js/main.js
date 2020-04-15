@@ -115,7 +115,16 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-$(document).on('submit', "#formToAddNewClient", function (event) {
+    $('body').on('hidden.bs.modal', '.modal', function () {
+         $("form").trigger('reset');
+         $( ".label-danger" ).remove();
+         $( ".alert-danger" ).remove();
+
+    });
+});
+
+$(document).ready(function() {
+    $(document).on('submit', "#formToAddNewClient", function (event) {
         event.preventDefault();
         var $form = $('#formToAddNewClient');
         var serializedForm = $form.serializeArray();
@@ -130,11 +139,11 @@ $(document).on('submit', "#formToAddNewClient", function (event) {
                     $('.modal-backdrop').remove()
                     $('#addNewClient').html(response)
                     $('#addClientModal').modal('show')
-                    $('#name').val(serializedForm[1].value);
-                    $('#surname').val(serializedForm[2].value);
-                    $('#dateOfBirth').val(serializedForm[3].value)
-                    $('#phoneNumber').val(serializedForm[4].value)
-                    $('#email').val(serializedForm[5].value)
+                    $('.myFormToAddNewClient #name').val(serializedForm[1].value)
+                    $('.myFormToAddNewClient #surname').val(serializedForm[2].value)
+                    $('.myFormToAddNewClient #dateOfBirth').val(serializedForm[3].value)
+                    $('.myFormToAddNewClient #phoneNumber').val(serializedForm[4].value)
+                    $('.myFormToAddNewClient #email').val(serializedForm[5].value)
                 }
                 else{
                 window.location.reload()
@@ -149,7 +158,7 @@ $(document).on('submit', "#formToAddNewClient", function (event) {
 });
 
 $(document).ready(function() {
-$(document).on('submit', "#formToUpdateClient", function (event) {
+    $(document).on('submit', "#formToUpdateClient", function (event) {
         event.preventDefault();
         var $form = $('#formToUpdateClient');
         var serializedForm = $form.serializeArray();
@@ -160,18 +169,16 @@ $(document).on('submit', "#formToUpdateClient", function (event) {
             dataType: "html",
             success: function(response) {
                 if($(response).find('.errorFound').length){
-                    console.log(serializedForm)
                     $('body').removeClass('modal-open')
                     $('.modal-backdrop').remove()
                     $('#updateClient').html(response)
                     $('#updateClientModal').modal('show')
-                    $('#id').val(serializedForm[1].value);
-                    console.log(serializedForm[2].value)
-                    $('#name').val(serializedForm[2].value);
-                    $('#surname').val(serializedForm[3].value);
-                    $('#dateOfBirth').val(serializedForm[4].value)
-                    $('#phoneNumber').val(serializedForm[5].value)
-                    $('#email').val(serializedForm[6].value)
+                    $('.myFormToUpdateClient  #id').val(serializedForm[1].value)
+                    $('.myFormToUpdateClient  #name').val(serializedForm[2].value)
+                    $('.myFormToUpdateClient #surname').val(serializedForm[3].value)
+                    $('.myFormToUpdateClient #dateOfBirth').val(serializedForm[4].value)
+                    $('.myFormToUpdateClient #phoneNumber').val(serializedForm[5].value)
+                    $('.myFormToUpdateClient #email').val(serializedForm[6].value)
                 }
                 else{
                 window.location.reload()

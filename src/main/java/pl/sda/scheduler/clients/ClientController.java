@@ -34,12 +34,11 @@ public class ClientController {
     @PostMapping("/save")
     String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
-        System.out.println(clientExists);
         if (clientExists != null) {
             bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
-            System.out.println("================ERROR================");
+            System.out.println("================SAVE=ERROR================");
             System.out.println(bindingResult);
             return "client/clients :: addNewClient";
         } else {
@@ -52,18 +51,20 @@ public class ClientController {
     String updateClientData(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
         Client clientExists = clientService.findByEmail(clientDTO.getEmail());
         Optional<Client> clientCurrent = clientService.findById(clientDTO.getId());
-        if(clientCurrent.get().getEmail().equals(clientExists.getEmail())){
-            clientExists=null;
+        if(clientCurrent.isPresent()){
+            if(clientCurrent.get().getEmail().equals(clientDTO.getEmail())) {
+                clientExists = null;
+            }
         }
-        System.out.println(clientExists);
         if (clientExists != null) {
             bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
-            System.out.println("================ERROR================");
+            System.out.println("================UPDATE=ERROR================");
             System.out.println(bindingResult);
             return "client/clients :: updateClient";
         } else {
+            System.out.println("================UPDATED================");
             clientService.updateAllClientData(clientMapper.clientDTOtoClient(clientDTO));
         }
         return "redirect:/app/clients";
