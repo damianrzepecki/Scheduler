@@ -8,6 +8,7 @@ import pl.sda.scheduler.clients.ClientDTO;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalTime;
 
 @Data
@@ -18,6 +19,7 @@ public class AppointmentDTO {
     @NotNull
     private String chosenDay;
     @NotNull
+    @Size(min = 2, max = 20)
     private String nameOfTreatment;
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
@@ -31,9 +33,7 @@ public class AppointmentDTO {
     private String price;
     @NotNull
     private long clientId;
-    @NotNull
     private String clientData;
-    @NotNull
     private ClientDTO client;
 
 }

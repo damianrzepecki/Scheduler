@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<title>modalToAddNewClient</title>
 <style>
 
 </style>
 <body>
 <div th:fragment="myFormToAddAppointment">
     <div class="myFormToAddAppointment">
-        <form th:action="@{/app/appointments/save}" method="post">
-            <div class="modal fade" id="addAppointmentModal" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/app/appointments/save}" method="post" class="formThatNeedsDataCleared"
+              modelAttribute="appointment" th:object="${appointmentDTO}" id="formToAddAppointment">
+            <div class="modal fade" id="addAppointmentModal" tabindex="-1" role="dialog" aria-hidden="true"
+                 data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -20,21 +20,24 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <div class="alert alert-danger errorFound" th:if="${#fields.hasErrors('*')}">
+                                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                            </div>
                             <div class="form-group">
                                 <label for="id" class="col-form-label">
                                     <span th:text="#{lang.modal.appointment.id}"></span></label>
-                                <input type="text" class="form-control" id="id" name="id" value="" disabled/>
+                                <input type="text" class="form-control" id="id" name="id" value="" readOnly="readOnly"/>
                             </div>
                             <div class="form-group" hidden>
                                 <label for="clientId" class="col-form-label">
                                     <span th:text="#{lang.modal.appointment.clientID}"></span></label>
-                                <input type="text" class="form-control" id="clientId" name="clientId" value=""/>
+                                <input type="text" class="form-control" id="clientId" name="clientId" />
                             </div>
                             <div class="form-group">
                                 <label for="clientData" class="col-form-label">
                                     <span th:text="#{lang.modal.appointment.clientData}"></span></label>
                                 <input type="text" class="form-control" id="clientData" name="clientData" value=""
-                                       disabled/>
+                                       readOnly="readOnly"/>
                             </div>
                             <div class="form-group">
                                 <label for="chosenDay" class="col-form-label">
@@ -47,6 +50,8 @@
                                     <span th:text="#{lang.modal.appointment.treatmentName}"></span></label>
                                 <input type="text" class="form-control" id="nameOfTreatment" name="nameOfTreatment"
                                        value="" required/>
+                                <p th:if="${#fields.hasErrors('nameOfTreatment')}" class="label label-danger"
+                                   th:errors="*{nameOfTreatment}" style="color:red;" ></p>
                             </div>
                             <div class="form-group">
                                 <label for="chosenHour" class="col-form-label">
@@ -78,7 +83,7 @@
                             <div class="form-group">
                                 <label for="hourFinished" class="col-form-label">
                                     <span th:text="#{lang.modal.appointment.endingHour}"></span></label>
-                                <input type="time" class="form-control" id="hourFinished" name="hourFinished" value=""
+                                <input type="time" class="form-control" id="hourFinished" name="hourFinished" value="12:30"
                                        required/>
                             </div>
                             <div class="form-group">

@@ -45,15 +45,16 @@ $(document).ready(function () {
         var href = $(this).attr('href');
         $.get(href, function (appointment) {
             $('.myFormToUpdateAppointment #id').val(appointment.id);
+            $('.myFormToUpdateAppointment #clientId').val(appointment.clientId);
+            $('.myFormToUpdateAppointment #clientData').val(appointment.clientData);
             $('.myFormToUpdateAppointment #chosenDay').val(appointment.chosenDay);
             $('.myFormToUpdateAppointment #chosenHour').val(appointment.chosenHour);
             $('.myFormToUpdateAppointment #nameOfTreatment').val(appointment.nameOfTreatment);
             $('.myFormToUpdateAppointment #hourFinished').val(appointment.hourFinished);
             $('.myFormToUpdateAppointment #price').val(appointment.price);
-            $('.myFormToUpdateAppointment #clientId').val(appointment.clientId);
-            $('.myFormToUpdateAppointment #clientData').val(appointment.clientData);
+
         });
-        $('.myFormToUpdateAppointment #editAppointmentModal').modal();
+        $('.myFormToUpdateAppointment #updateAppointmentModal').modal();
     });
 });
 $(document).ready(function () {
@@ -88,13 +89,13 @@ $(document).ready(function(){
 });
 
 $(document).ready(function () {
-    $('#buttonAddMinutes').on('click',function(){
+    $(document).on('click', "#buttonAddMinutes", function () {
 //     alert( $('#minutes').find(':selected').val()); //Alert pokazujący wybraną wartość
      document.getElementById('hourFinished').stepUp($('#minutes').find(':selected').val());
     });
 });
 $(document).ready(function () {
-    $('#buttonSubtractMinutes').on('click',function(){
+    $(document).on('click', "#buttonSubtractMinutes", function () {
      document.getElementById('hourFinished').stepDown($('#minutes').find(':selected').val());
     });
 });
@@ -116,10 +117,9 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $('body').on('hidden.bs.modal', '.modal', function () {
-         $("form").trigger('reset');
-         $( ".label-danger" ).remove();
-         $( ".alert-danger" ).remove();
-
+        $(".formThatNeedsDataCleared .label-danger").remove();
+        $(".formThatNeedsDataCleared .alert-danger").remove();
+        $("form").trigger('reset');
     });
 });
 
@@ -179,6 +179,80 @@ $(document).ready(function() {
                     $('.myFormToUpdateClient #dateOfBirth').val(serializedForm[4].value)
                     $('.myFormToUpdateClient #phoneNumber').val(serializedForm[5].value)
                     $('.myFormToUpdateClient #email').val(serializedForm[6].value)
+                }
+                else{
+                window.location.reload()
+                }
+            },
+            error: function(error){
+            alert(error)
+            }
+        });
+        return false;
+    });
+});
+
+$(document).ready(function() {
+    $(document).on('submit', "#formToAddAppointment", function (event) {
+        event.preventDefault();
+        var $form = $('#formToAddAppointment');
+        var serializedForm = $form.serializeArray();
+        $.ajax({
+            type: 'POST',
+            url: '/app/appointments/save',
+            data: $form.serialize(),
+            dataType: "html",
+            success: function(response) {
+                if($(response).find('.errorFound').length){
+                    $('body').removeClass('modal-open')
+                    $('.modal-backdrop').remove()
+                    $('#addAppointment').html(response)
+                    $('#addAppointmentModal').modal('show')
+                    $('.myFormToAddAppointment #id').val(serializedForm[1].value)
+                    $('.myFormToAddAppointment #clientId').val(serializedForm[2].value)
+                    $('.myFormToAddAppointment #clientData').val(serializedForm[3].value)
+                    $('.myFormToAddAppointment #chosenDay').val(serializedForm[4].value)
+                    $('.myFormToAddAppointment #nameOfTreatment').val(serializedForm[5].value)
+                    $('.myFormToAddAppointment #chosenHour').val(serializedForm[6].value)
+                    $('.myFormToAddAppointment #hourFinished').val(serializedForm[8].value)
+                    $('.myFormToAddAppointment #price').val(serializedForm[9].value)
+                }
+                else{
+                window.location.reload()
+                }
+            },
+            error: function(error){
+            alert(error)
+            }
+        });
+        return false;
+    });
+});
+
+$(document).ready(function() {
+    $(document).on('submit', "#formToUpdateAppointment", function (event) {
+        event.preventDefault();
+        var $form = $('#formToUpdateAppointment');
+        var serializedForm = $form.serializeArray();
+        $.ajax({
+            type: 'POST',
+            url: '/app/appointments/update',
+            data: $form.serialize(),
+            dataType: "html",
+            success: function(response) {
+                if($(response).find('.errorFound').length){
+                    $('body').removeClass('modal-open')
+                    $('.modal-backdrop').remove()
+                    $('#updateAppointment').html(response)
+                    $('#updateAppointmentModal').modal('show')
+                    $('.myFormToUpdateAppointment #id').val(serializedForm[1].value)
+                    $('.myFormToUpdateAppointment #clientId').val(serializedForm[2].value)
+                    $('.myFormToUpdateAppointment #clientData').val(serializedForm[3].value)
+                    $('.myFormToUpdateAppointment #chosenDay').val(serializedForm[4].value)
+                    $('.myFormToUpdateAppointment #nameOfTreatment').val(serializedForm[5].value)
+                    $('.myFormToUpdateAppointment #chosenHour').val(serializedForm[6].value)
+                    $('.myFormToUpdateAppointment #hourFinished').val(serializedForm[8].value)
+                    $('.myFormToUpdateAppointment #price').val(serializedForm[9].value)
                 }
                 else{
                 window.location.reload()

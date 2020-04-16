@@ -51,7 +51,9 @@
             </table>
         </div>
     </div>
-    <div th:include="modals/modalToUpdateAppointment :: myFormToUpdateAppointment"></div>
+    <div id="updateAppointment" th:fragment="updateAppointment">
+        <div th:include="modals/modalToUpdateAppointment :: myFormToUpdateAppointment"></div>
+    </div>
     <div th:include="modals/modalToDeleteAppointment :: myFormToDeleteAppointment"></div>
 
 </div>

@@ -6,7 +6,7 @@
 <div th:fragment="myFormToUpdateClient">
     <div class="myFormToUpdateClient">
         <form th:action="@{/app/clients/update/}" method="post" modelAttribute="client" th:object="${clientDTO}"
-              id="formToUpdateClient">
+              id="formToUpdateClient" class="formThatNeedsDataCleared">
             <div class="modal fade" id="updateClientModal" tabindex="-1" role="dialog"
                  aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog" role="document">

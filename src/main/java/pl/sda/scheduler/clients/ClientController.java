@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.sda.scheduler.appointments.AppointmentDTO;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -16,32 +17,35 @@ import java.util.Optional;
 public class ClientController {
     private ClientService clientService;
     private ClientMapper clientMapper = Mappers.getMapper(ClientMapper.class);
+    private CustomClientValidation customClientValidation;
 
-    ClientController(ClientService clientService) {
+    ClientController(ClientService clientService, CustomClientValidation customClientValidation) {
         this.clientService = clientService;
+        this.customClientValidation = customClientValidation;
     }
 
     @GetMapping
-    public String getClientList(Model model, Pageable pageable, ClientDTO clientDTO) {
+    public String getClientList(Model model, Pageable pageable, ClientDTO clientDTO, AppointmentDTO appointmentDTO) {
         Page<ClientDTO> clientsPage = clientService.getAllClients(pageable).map(clientMapper::clientToClientDTO);
         model.addAttribute("page", clientsPage);
         model.addAttribute("clients", clientsPage.getContent());
         model.addAttribute("clientDTO", clientDTO);
+        model.addAttribute("appointmentDTO", appointmentDTO);
 
         return "client/clients";
     }
 
     @PostMapping("/save")
     String saveClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
-        Client clientExists = clientService.findByEmail(clientDTO.getEmail());
-        if (clientExists != null) {
+        if (customClientValidation.isEmailTaken(clientDTO)) {
             bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
             System.out.println("================SAVE=ERROR================");
             System.out.println(bindingResult);
             return "client/clients :: addNewClient";
-        } else {
+        }
+        else {
             clientService.addNewClient(clientMapper.clientDTOtoClient(clientDTO));
         }
         return "redirect:/app/clients";
@@ -49,22 +53,15 @@ public class ClientController {
 
     @PostMapping("/update")
     String updateClientData(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult) {
-        Client clientExists = clientService.findByEmail(clientDTO.getEmail());
-        Optional<Client> clientCurrent = clientService.findById(clientDTO.getId());
-        if(clientCurrent.isPresent()){
-            if(clientCurrent.get().getEmail().equals(clientDTO.getEmail())) {
-                clientExists = null;
-            }
-        }
-        if (clientExists != null) {
+        if (customClientValidation.isEmailTakenBySomeoneElse(clientDTO)) {
             bindingResult.rejectValue("email", "email");
         }
         if (bindingResult.hasErrors()) {
             System.out.println("================UPDATE=ERROR================");
             System.out.println(bindingResult);
             return "client/clients :: updateClient";
-        } else {
-            System.out.println("================UPDATED================");
+        }
+        else {
             clientService.updateAllClientData(clientMapper.clientDTOtoClient(clientDTO));
         }
         return "redirect:/app/clients";

@@ -70,8 +70,9 @@
         <div th:include="modals/modalToUpdateClientData :: myFormToUpdateClient"></div>
     </div>
     <div th:include="modals/modalToDeleteClient :: myFormToDeleteClient"></div>
-    <div th:include="modals/modalToAddAppointment :: myFormToAddAppointment"></div>
-
+    <div id="addAppointment" th:fragment="addAppointment">
+        <div th:include="modals/modalToAddAppointment :: myFormToAddAppointment"></div>
+    </div>
 </div>
 </body>
 </html>
