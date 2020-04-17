@@ -1,78 +1,76 @@
 <!DOCTYPE html>
-<html
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org"
         layout:decorate="~{fragments/layout}">
 <head>
     <script type="text/javascript" th:src="@{../js/main.js}"></script>
-    <title><span th:text="#{lang.clients.page.title}"></span></title>
 </head>
 <body>
-<div layout:fragment="content" th:remove="tag">
-    <div class="card">
-        <div>
-            <button id="langChangePL">PL</button>
-            <button id="langChangeEN">EN</button>
-        </div>
-        <div class="card-body">
-            <table data-toggle="table"
-                   data-pagination="true"
-                   data-search="true"
-                   id="table"
-                   class="table table-borderless">
-                <thead class="thead-dark">
-                <tr>
-                    <th th:text="#{lang.clients.page.table.id}"></th>
-                    <th th:text="#{lang.clients.page.table.name}"></th>
-                    <th th:text="#{lang.clients.page.table.surname}" data-sortable="true"></th>
-                    <th th:text="#{lang.clients.page.table.dateOfBirth}" data-sortable="true"></th>
-                    <th th:text="#{lang.clients.page.table.phoneNumber}"></th>
-                    <th th:text="#{lang.clients.page.table.email}"></th>
-                    <th th:text="#{lang.clients.page.table.dateRegistered}" data-sortable="true"></th>
-                    <th><a class="btn btn-primary buttonToAddNewClient" th:text="#{lang.clients.page.table.add}"></a></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="client: ${clients}">
-                    <td th:text="${client.id}"></td>
-                    <td th:text="${client.name}"></td>
-                    <td th:text="${client.surname}"></td>
-                    <td th:text="${client.dateOfBirth}"></td>
-                    <td th:text="${client.phoneNumber}"></td>
-                    <td th:text="${client.email}"></td>
-                    <td th:text="${client.dateRegistered}"></td>
-                    <td>
-                        <a th:href="@{/app/clients/findOne/(id=${client.id})}" th:text="#{lang.clients.page.table.edit}"
-                           class="btn btn-primary buttonToUpdateClient"></a>
-                    </td>
-                    <td>
-                        <a th:href="@{/app/clients/findOne/(id=${client.id})}"
-                           class="btn btn-warning buttonToAddAppointment">
-                            <span th:text="#{lang.clients.page.table.treatment}"></span></a>
-                    </td>
-                    <td>
-                        <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger buttonToDeleteClient">
-                            <span th:text="#{lang.clients.page.table.delete}"></span></a>
-                    </td>
+    <div layout:fragment="content" th:remove="tag">
+        <div class="card">
+            <div>
+                <button id="langChangePL">PL</button>
+                <button id="langChangeEN">EN</button>
+            </div>
+            <div class="card-body">
+                <table data-toggle="table"
+                       data-pagination="true"
+                       data-search="true"
+                       id="table"
+                       class="table table-borderless">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th th:text="#{lang.clients.page.table.id}"></th>
+                            <th th:text="#{lang.clients.page.table.name}"></th>
+                            <th th:text="#{lang.clients.page.table.surname}" data-sortable="true"></th>
+                            <th th:text="#{lang.clients.page.table.dateOfBirth}" data-sortable="true"></th>
+                            <th th:text="#{lang.clients.page.table.phoneNumber}"></th>
+                            <th th:text="#{lang.clients.page.table.email}"></th>
+                            <th th:text="#{lang.clients.page.table.dateRegistered}" data-sortable="true"></th>
+                            <th><a class="btn btn-primary buttonToAddNewClient" th:text="#{lang.clients.page.table.add}"></a></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="client: ${clients}">
+                            <td th:text="${client.id}"></td>
+                            <td th:text="${client.name}"></td>
+                            <td th:text="${client.surname}"></td>
+                            <td th:text="${client.dateOfBirth}"></td>
+                            <td th:text="${client.phoneNumber}"></td>
+                            <td th:text="${client.email}"></td>
+                            <td th:text="${client.dateRegistered}"></td>
+                            <td>
+                                <a th:href="@{/app/clients/findOne/(id=${client.id})}" th:text="#{lang.clients.page.table.edit}"
+                                   class="btn btn-primary buttonToUpdateClient"></a>
+                            </td>
+                            <td>
+                                <a th:href="@{/app/clients/findOne/(id=${client.id})}"
+                                   class="btn btn-warning buttonToAddAppointment">
+                                    <span th:text="#{lang.clients.page.table.treatment}"></span></a>
+                            </td>
+                            <td>
+                                <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger buttonToDeleteClient">
+                                    <span th:text="#{lang.table.delete}"></span></a>
+                            </td>
 
-                </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="addNewClient" th:fragment="addNewClient">
+            <div th:include="modals/modalToAddNewClient :: myFormToAddNewClient"></div>
+        </div>
+        <div id="updateClient" th:fragment="updateClient">
+            <div th:include="modals/modalToUpdateClientData :: myFormToUpdateClient"></div>
+        </div>
+        <div th:include="modals/modalToDeleteClient :: myFormToDeleteClient"></div>
+        <div id="addAppointment" th:fragment="addAppointment">
+            <div th:include="modals/modalToAddAppointment :: myFormToAddAppointment"></div>
         </div>
     </div>
-    <div id="addNewClient" th:fragment="addNewClient">
-        <div th:include="modals/modalToAddNewClient :: myFormToAddNewClient"></div>
-    </div>
-    <div id="updateClient" th:fragment="updateClient">
-        <div th:include="modals/modalToUpdateClientData :: myFormToUpdateClient"></div>
-    </div>
-    <div th:include="modals/modalToDeleteClient :: myFormToDeleteClient"></div>
-    <div id="addAppointment" th:fragment="addAppointment">
-        <div th:include="modals/modalToAddAppointment :: myFormToAddAppointment"></div>
-    </div>
-</div>
 </body>
 </html>

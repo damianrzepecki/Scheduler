@@ -5,58 +5,56 @@
       layout:decorate="~{fragments/layout}">
 <head>
     <script type="text/javascript" th:src="@{../js/main.js}"></script>
-    <title>Appointments</title>
-
 </head>
 <body>
-<div layout:fragment="content" th:remove="tag">
-    <div class="card">
-        <div class="card-header">
-            <table data-toggle="table"
-                   data-pagination="true"
-                   data-search="true"
-                   id="appointmentTable"
-                   class="table table-borderless">
-                <thead class="thead-dark">
-                <tr>
-                    <th>ID</th>
-                    <th data-sortable="true">Dzień</th>
-                    <th data-sortable="true">Zabieg</th>
-                    <th>Godzina Rozpoczęcia</th>
-                    <th>Godzina Zakończenia</th>
-                    <th>Cena</th>
-                    <th>ID Klienta</th>
-                    <th data-sortable="true">Dane Klienta</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="appo: ${appointments}">
-                    <td th:text="${appo.id}"></td>
-                    <td th:text="${appo.chosenDay}"></td>
-                    <td th:text="${appo.nameOfTreatment}"></td>
-                    <td th:text="${appo.chosenHour}"></td>
-                    <td th:text="${appo.hourFinished}"></td>
-                    <td th:text="${appo.price}"></td>
-                    <td th:text="${appo.clientId}"></td>
-                    <td th:text="${appo.clientData}"></td>
-                    <td>
-                        <a th:href="@{/app/appointments/findOne/(id=${appo.id})}"
-                           class="btn btn-primary buttonToEditAppointment">Edytuj</a>
-                        <a th:href="@{/app/appointments/delete/(id=${appo.id})}"
-                           class="btn btn-danger buttonToDeleteAppointment">Usuń</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+    <div layout:fragment="content" th:remove="tag">
+        <div class="card">
+            <div class="card-body">
+                <table data-toggle="table"
+                       data-pagination="true"
+                       data-search="true"
+                       id="table"
+                       class="table table-borderless">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th th:text="#{lang.appointment.table.id}"></th>
+                            <th th:text="#{lang.appointment.table.day}" data-sortable="true" ></th>
+                            <th th:text="#{lang.appointment.table.treatment}" data-sortable="true" ></th>
+                            <th th:text="#{lang.appointment.table.hourStart}"></th>
+                            <th th:text="#{lang.appointment.table.hourEnd}"></th>
+                            <th th:text="#{lang.appointment.table.price}"></th>
+                            <th th:text="#{lang.appointment.table.clientID}"></th>
+                            <th th:text="#{lang.appointment.table.clientData}" data-sortable="true"></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="appointment: ${appointments}">
+                            <td th:text="${appointment.id}"></td>
+                            <td th:text="${appointment.chosenDay}"></td>
+                            <td th:text="${appointment.nameOfTreatment}"></td>
+                            <td th:text="${appointment.chosenHour}"></td>
+                            <td th:text="${appointment.hourFinished}"></td>
+                            <td th:text="${appointment.price}"></td>
+                            <td th:text="${appointment.clientId}"></td>
+                            <td th:text="${appointment.clientData}"></td>
+                            <td>
+                                <a th:href="@{/app/appointments/findOne/(id=${appo.id})}"
+                                   class="btn btn-primary buttonToEditAppointment"
+                                   th:text="#{lang.table.edit}"></a>
+                                <a th:href="@{/app/appointments/delete/(id=${appo.id})}"
+                                   class="btn btn-danger buttonToDeleteAppointment"
+                                   th:text="#{lang.table.delete}"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <div id="updateAppointment" th:fragment="updateAppointment">
+            <div th:include="modals/modalToUpdateAppointment :: myFormToUpdateAppointment"></div>
+        </div>
+        <div th:include="modals/modalToDeleteAppointment :: myFormToDeleteAppointment"></div>
     </div>
-    <div id="updateAppointment" th:fragment="updateAppointment">
-        <div th:include="modals/modalToUpdateAppointment :: myFormToUpdateAppointment"></div>
-    </div>
-    <div th:include="modals/modalToDeleteAppointment :: myFormToDeleteAppointment"></div>
-
-</div>
 </body>
-
 </html>

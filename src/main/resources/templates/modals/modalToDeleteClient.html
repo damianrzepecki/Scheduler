@@ -18,12 +18,14 @@
                     </div>
                     <div class="modal-body">
                         <p class="alert alert-danger">
-                            Czy na pewno usunąć?
+                            <span th:text="#{lang.modal.sureToDelete}"></span>
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a href="" id="deleteClientButton" class="btn btn-danger">Usuń</a>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <span th:text="#{lang.modal.close}"></span></button>
+                        <a href="" id="deleteClientButton" class="btn btn-danger">
+                            <span th:text="#{lang.modal.delete}"></a>
                     </div>
                 </div>
             </div>
