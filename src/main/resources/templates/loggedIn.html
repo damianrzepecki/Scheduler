@@ -3,9 +3,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       layout:decorate="~{fragments/layout}">
-<head>
-    <script></script>
-</head>
     <body>
         <div layout:fragment="content" th:remove="tag">
             <h1><span th:text="#{lang.loggedIn.page.securedPageH1}"></span></h1>

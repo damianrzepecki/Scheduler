@@ -3,9 +3,6 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
-<head>
-    <script type="text/javascript" th:src="@{../js/main.js}"></script>
-</head>
 <body>
     <div layout:fragment="content" th:remove="tag">
         <div class="card">
@@ -39,10 +36,10 @@
                             <td th:text="${appointment.clientId}"></td>
                             <td th:text="${appointment.clientData}"></td>
                             <td>
-                                <a th:href="@{/app/appointments/findOne/(id=${appo.id})}"
+                                <a th:href="@{/app/appointments/findOne/(id=${appointment.id})}"
                                    class="btn btn-primary buttonToEditAppointment"
                                    th:text="#{lang.table.edit}"></a>
-                                <a th:href="@{/app/appointments/delete/(id=${appo.id})}"
+                                <a th:href="@{/app/appointments/delete/(id=${appointment.id})}"
                                    class="btn btn-danger buttonToDeleteAppointment"
                                    th:text="#{lang.table.delete}"></a>
                             </td>

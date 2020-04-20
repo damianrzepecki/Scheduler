@@ -101,16 +101,18 @@ $(document).ready(function () {
 });
 //
 $(document).ready(function() {
-    $('#langChangePL').on('click', function () {
+    $('#langChangePL').on('click', function{
     $('#table').bootstrapTable('destroy').bootstrapTable({
-          locale: 'pl-PL'});
+          locale: 'pl-PL'
+          });
     alert('PLPLPLP');
    });
 });
 $(document).ready(function() {
-    $('#langChangeEN').on('click', function () {
+    $('#langChangeEN').on('click', function{
     $('#table').bootstrapTable('destroy').bootstrapTable({
-          locale: 'en-US'});
+          locale: 'en-US'
+          });
     alert('USUS');
    });
 });

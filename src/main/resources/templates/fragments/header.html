@@ -21,7 +21,7 @@
                 <div class="navbar-nav">
                     <a class="navbar-brand" th:href="@{/}">
                         <span th:text="#{lang.header.fragment.brandName}"></span></a>
-                    <a class="nav-item nav-link active" th:href="@{/app/loggedIn/}">
+                    <a class="nav-item nav-link " th:href="@{/app/loggedIn/}">
                         <span th:text="#{lang.header.fragment.loggedIn}"></span></a>
                     <a class="nav-item nav-link" th:href="@{/app/clients}">
                         <span th:text="#{lang.header.fragment.clients}"></span></a>
@@ -38,7 +38,6 @@
                     <span th:case="${true}"></span>
                     <span th:case="*">Should never happen, but who knows...</span>
                 </div>
-
                 <div sec:authorize="isAuthenticated()">
                     <a class="nav-item nav-link" th:href="@{/app/logout}">
                         <span th:text="#{lang.header.fragment.logOut}"></span></a>

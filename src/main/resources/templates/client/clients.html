@@ -3,9 +3,6 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org"
         layout:decorate="~{fragments/layout}">
-<head>
-    <script type="text/javascript" th:src="@{../js/main.js}"></script>
-</head>
 <body>
     <div layout:fragment="content" th:remove="tag">
         <div class="card">
@@ -43,7 +40,8 @@
                             <td th:text="${client.email}"></td>
                             <td th:text="${client.dateRegistered}"></td>
                             <td>
-                                <a th:href="@{/app/clients/findOne/(id=${client.id})}" th:text="#{lang.clients.page.table.edit}"
+                                <a th:href="@{/app/clients/findOne/(id=${client.id})}"
+                                   th:text="#{lang.table.edit}"
                                    class="btn btn-primary buttonToUpdateClient"></a>
                             </td>
                             <td>
@@ -52,10 +50,10 @@
                                     <span th:text="#{lang.clients.page.table.treatment}"></span></a>
                             </td>
                             <td>
-                                <a th:href="@{/app/clients/delete/(id=${client.id})}" class="btn btn-danger buttonToDeleteClient">
+                                <a th:href="@{/app/clients/delete/(id=${client.id})}"
+                                   class="btn btn-danger buttonToDeleteClient">
                                     <span th:text="#{lang.table.delete}"></span></a>
                             </td>
-
                         </tr>
                     </tbody>
                 </table>
