@@ -65,14 +65,6 @@ $(document).ready(function () {
         $('.myFormToDeleteAppointment #deleteAppointmentModal').modal();
     });
 });
-$(document).ready(function() {
-    $("#locales").change(function () {
-        var selectedOption = $('#locales').val();
-        if (selectedOption != ''){
-            window.location.replace('?lang=' + selectedOption);
-        };
-    });
-});
 
 $(document).ready(function() {
     $('#chosenHour').on('change', function() {
@@ -98,23 +90,6 @@ $(document).ready(function () {
     $(document).on('click', "#buttonSubtractMinutes", function () {
      document.getElementById('hourFinished').stepDown($('#minutes').find(':selected').val());
     });
-});
-//
-$(document).ready(function() {
-    $('#langChangePL').on('click', function{
-    $('#table').bootstrapTable('destroy').bootstrapTable({
-          locale: 'pl-PL'
-          });
-    alert('PLPLPLP');
-   });
-});
-$(document).ready(function() {
-    $('#langChangeEN').on('click', function{
-    $('#table').bootstrapTable('destroy').bootstrapTable({
-          locale: 'en-US'
-          });
-    alert('USUS');
-   });
 });
 
 $(document).ready(function() {

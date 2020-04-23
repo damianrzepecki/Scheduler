@@ -2,6 +2,9 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
+<head th:replace="fragments/headBeforeLogin :: headBeforeLogin">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+</head>
 <body>
 <div layout:fragment="content">
         <div class="row">

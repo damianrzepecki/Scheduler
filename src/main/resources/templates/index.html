@@ -2,10 +2,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
-<head>
-    <title><span th:text="#{lang.index.page.title}"></span></title>
-    <script></script>
-</head>
+<head th:replace="fragments/headBeforeLogin :: headBeforeLogin"></head>
 <body>
 <div layout:fragment="content" th:remove="tag">
     <h1><span th:text="#{lang.index.page.h1}"></span></h1>
